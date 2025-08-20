@@ -13,6 +13,7 @@ import {
   Church,
   UserCheck,
   Building2,
+  School,
 } from "lucide-react";
 import {
   Sidebar,
@@ -35,6 +36,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
+import { useEffect, useState } from "react";
 
 // Updated data structure to support unlimited nesting and icons
 const data = {
@@ -217,6 +219,27 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { state } = useSidebar();
   const isCollapsed = state === "collapsed";
 
+  const { tenants, loading, error } = useTenants();
+  if (loading) return <div>Loading tenants...</div>;
+  if (error) return <div>Error: {error}</div>;
+
+  const tenantsNavbar = tenants?.map(
+    (tenant) =>
+      ({
+        title: tenant.name,
+        url: `/tenant-slugs/${tenant.slug}`,
+        icon: School,
+      }) as NavItem,
+  );
+
+  const newData = {
+    version: data.versions,
+    navMain: [
+      { title: "Các phòng ban", url: "#", items: tenantsNavbar },
+      ...data.navMain,
+    ],
+  };
+
   return (
     <Sidebar {...props}>
       <SidebarHeader>
@@ -242,7 +265,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
 
       <SidebarContent>
-        {data.navMain.map((item) => (
+        {newData.navMain.map((item) => (
           <Collapsible
             key={item.title}
             className="group/collapsible"
@@ -276,3 +299,41 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     </Sidebar>
   );
 }
+
+interface Tenant {
+  id: string;
+  name: string;
+  slug: string;
+  domain?: string;
+  // Add other tenant fields based on your schema
+}
+
+const useTenants = () => {
+  const [tenants, setTenants] = useState<Tenant[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const fetchTenants = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch("/api/tenants?limit=1000"); // Adjust limit as needed
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch tenants");
+      }
+
+      const data = await response.json();
+      setTenants(data.docs);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Unknown error");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchTenants();
+  }, []);
+
+  return { tenants, loading, error, refetch: () => fetchTenants() };
+};

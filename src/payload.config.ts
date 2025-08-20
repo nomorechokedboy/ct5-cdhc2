@@ -3,7 +3,6 @@ import { lexicalEditor } from "@payloadcms/richtext-lexical";
 import path from "path";
 import { buildConfig } from "payload";
 import { fileURLToPath } from "url";
-
 import { Pages } from "./collections/Pages";
 import { Tenants } from "./collections/Tenants";
 import Users from "./collections/Users";
@@ -22,9 +21,6 @@ export default buildConfig({
     user: "users",
   },
   collections: [Pages, Users, Tenants],
-  // db: mongooseAdapter({
-  //   url: process.env.DATABASE_URI as string,
-  // }),
   db: sqliteAdapter({
     client: {
       url: process.env.DATABASE_URI!,
