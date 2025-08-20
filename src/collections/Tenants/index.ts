@@ -46,5 +46,25 @@ export const Tenants: CollectionConfig = {
       defaultValue: false,
       index: true,
     },
+    {
+      name: "level",
+      type: "select",
+      options: [
+        {
+          label: "Phòng",
+          value: "department",
+        },
+        {
+          label: "Ban",
+          value: "division",
+        },
+      ],
+      admin: {
+        description: "",
+        position: "sidebar",
+      },
+      defaultValue: "department",
+      index: true,
+    },
   ],
 };
