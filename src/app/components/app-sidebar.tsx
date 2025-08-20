@@ -2,19 +2,7 @@
 
 import { useSidebar } from "@/components/ui/sidebar";
 import type * as React from "react";
-import {
-  UserPlus,
-  Calendar,
-  ChevronDown,
-  PieChart,
-  Star,
-  Award,
-  HeartHandshake,
-  Church,
-  UserCheck,
-  Building2,
-  School,
-} from "lucide-react";
+import { Building, ChevronDown, School } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -41,52 +29,7 @@ import { useEffect, useState } from "react";
 // Updated data structure to support unlimited nesting and icons
 const data = {
   versions: ["1.0.1", "1.1.0-alpha", "2.0.0-beta1"],
-  navMain: [
-    {
-      title: "Thống kê học viên",
-      url: "#",
-      icon: PieChart,
-      items: [
-        {
-          title: "Đảng viên",
-          url: "/cpv",
-          icon: UserCheck,
-        },
-        {
-          title: "Đoàn viên",
-          url: "/hcyu",
-          icon: UserPlus,
-        },
-        {
-          title: "Dân tộc thiểu số",
-          url: "/ethnic-minority",
-          icon: Star,
-        },
-        {
-          title: "Tôn giáo",
-          url: "/religion",
-          icon: Church,
-        },
-      ],
-    },
-    {
-      title: "Sự kiện học viên",
-      url: "#",
-      icon: Calendar,
-      items: [
-        {
-          title: "Sinh nhật đồng đội",
-          url: "/birthday",
-          icon: Award,
-        },
-        {
-          title: "Chuyển Đảng chính thức ",
-          url: "/chuyen-dang-chinh-thuc",
-          icon: HeartHandshake,
-        },
-      ],
-    },
-  ],
+  navMain: [],
 };
 
 // Type definition for navigation items
@@ -223,19 +166,33 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   if (loading) return <div>Loading tenants...</div>;
   if (error) return <div>Error: {error}</div>;
 
-  const tenantsNavbar = tenants?.map(
-    (tenant) =>
-      ({
-        title: tenant.name,
-        url: `/tenant-slugs/${tenant.slug}`,
-        icon: School,
-      }) as NavItem,
-  );
+  const departmentsNavbar = tenants
+    ?.filter((tenant) => tenant.level === "department")
+    .map(
+      (tenant) =>
+        ({
+          title: tenant.name,
+          url: `/tenant-slugs/${tenant.slug}`,
+          icon: School,
+        }) as NavItem,
+    );
+
+  const divisionNavbar = tenants
+    ?.filter((tenant) => tenant.level === "division")
+    .map(
+      (tenant) =>
+        ({
+          title: tenant.name,
+          url: `/tenant-slugs/${tenant.slug}`,
+          icon: Building,
+        }) as NavItem,
+    );
 
   const newData = {
     version: data.versions,
     navMain: [
-      { title: "Các phòng ban", url: "#", items: tenantsNavbar },
+      { title: "Phòng", url: "#", items: departmentsNavbar },
+      { title: "Ban", url: "#", items: divisionNavbar },
       ...data.navMain,
     ],
   };
@@ -306,6 +263,7 @@ interface Tenant {
   slug: string;
   domain?: string;
   // Add other tenant fields based on your schema
+  level: "department" | "division";
 }
 
 const useTenants = () => {

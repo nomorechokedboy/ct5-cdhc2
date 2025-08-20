@@ -146,6 +146,7 @@ export interface Tenant {
    * If checked, logging in is not required to read. Useful for building public pages.
    */
   allowPublicRead?: boolean | null;
+  level?: ('department' | 'division') | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -294,6 +295,7 @@ export interface TenantsSelect<T extends boolean = true> {
   domain?: T;
   slug?: T;
   allowPublicRead?: T;
+  level?: T;
   updatedAt?: T;
   createdAt?: T;
 }

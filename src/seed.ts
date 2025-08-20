@@ -6,27 +6,30 @@ export const seed: NonNullable<Config["onInit"]> = async (
   const tenant1 = await payload.create({
     collection: "tenants",
     data: {
-      name: "Tenant 1",
-      slug: "gold",
-      domain: "gold.localhost",
+      name: "Phòng TM - HC",
+      slug: "phong-tm-hc",
+      domain: "tmhc.localhost",
+      level: "department",
     },
   });
 
   const tenant2 = await payload.create({
     collection: "tenants",
     data: {
-      name: "Tenant 2",
-      slug: "silver",
-      domain: "silver.localhost",
+      name: "Phòng Đào tạo",
+      slug: "phong-dao-tao",
+      domain: "dt.localhost",
+      level: "department",
     },
   });
 
   const tenant3 = await payload.create({
     collection: "tenants",
     data: {
-      name: "Tenant 3",
-      slug: "bronze",
-      domain: "bronze.localhost",
+      name: "Ban tài chính",
+      slug: "ban-tai-chinh",
+      domain: "bantc.localhost",
+      level: "division",
     },
   });
 
