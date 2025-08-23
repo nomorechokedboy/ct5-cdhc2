@@ -25,6 +25,8 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import { useEffect, useState } from "react";
+import { AppSidebarSkeleton } from "@/components/app-sidebar-skeleton";
+import Image from "next/image";
 
 // Updated data structure to support unlimited nesting and icons
 const data = {
@@ -163,7 +165,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const isCollapsed = state === "collapsed";
 
   const { tenants, loading, error } = useTenants();
-  if (loading) return <div>Loading tenants...</div>;
+  if (loading) return <AppSidebarSkeleton />;
   if (error) return <div>Error: {error}</div>;
 
   const departmentsNavbar = tenants
@@ -202,10 +204,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarHeader>
         <div className="flex items-center gap-2 px-4 py-2">
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-secondary text-primary-foreground">
-            <img
-              src="/placeholder.svg?height=32&width=32"
+            <Image
+              src="/cdhc2.png"
               alt="Logo Trường Cao đẳng hậu cần 2"
-              className="h-6 w-6"
+              width={24}
+              height={24}
             />
           </div>
           {!isCollapsed && (
