@@ -44,6 +44,11 @@ interface NavItem {
   icon?: React.ElementType;
 }
 
+// hanlde logout 
+const handleLogout  = () => {
+  return true
+}
+
 // Recursive component to render nested menu items
 function NavMenuItems({
   items,
@@ -254,7 +259,17 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             </SidebarGroup>
           </Collapsible>
         ))}
+        
       </SidebarContent>
+     {/* Nút logout */}
+      <div className="px-4 py-2">
+        <button
+          onClick={handleLogout}
+          className="w-full rounded-md bg-destructive px-4 py-2 text-sm text-white hover:bg-destructive/90 transition"
+        >
+          Đăng xuất
+        </button>
+      </div>
       <SidebarRail />
     </Sidebar>
   );
