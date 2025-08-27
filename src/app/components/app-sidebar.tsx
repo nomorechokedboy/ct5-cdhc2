@@ -44,10 +44,7 @@ interface NavItem {
   icon?: React.ElementType;
 }
 
-// hanlde logout 
-const handleLogout  = () => {
-  return true
-}
+
 
 // Recursive component to render nested menu items
 function NavMenuItems({
@@ -170,7 +167,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const isCollapsed = state === "collapsed";
 
   const { tenants, loading, error } = useTenants();
-  if (loading) return <AppSidebarSkeleton />;
+
+
+
+  if (loading ) return <AppSidebarSkeleton />;
   if (error) return <div>Error: {error}</div>;
 
   const departmentsNavbar = tenants
@@ -261,15 +261,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         ))}
         
       </SidebarContent>
-     {/* Nút logout */}
-      <div className="px-4 py-2">
-        <button
-          onClick={handleLogout}
-          className="w-full rounded-md bg-destructive px-4 py-2 text-sm text-white hover:bg-destructive/90 transition"
-        >
-          Đăng xuất
-        </button>
-      </div>
       <SidebarRail />
     </Sidebar>
   );
@@ -310,6 +301,12 @@ const useTenants = () => {
   useEffect(() => {
     fetchTenants();
   }, []);
-
+ console.log('tenant', tenants);
+ 
   return { tenants, loading, error, refetch: () => fetchTenants() };
 };
+
+
+
+
+

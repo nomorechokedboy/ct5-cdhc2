@@ -66,5 +66,12 @@ export const Tenants: CollectionConfig = {
       defaultValue: "department",
       index: true,
     },
+    {
+      name: 'relatedTenant',
+      type : 'join',
+      collection: 'categories',
+      on: 'tenants'
+    },
+    
   ],
 };
