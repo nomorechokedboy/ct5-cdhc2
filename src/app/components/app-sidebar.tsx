@@ -2,6 +2,8 @@
 
 import { useSidebar } from "@/components/ui/sidebar";
 import type * as React from "react";
+
+import { FolderIcon } from "lucide-react"; // icon cho category
 import { Building, ChevronDown, School } from "lucide-react";
 import {
   Sidebar,
@@ -168,32 +170,18 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
   const { tenants, loading, error } = useTenants();
 
-
-
   if (loading ) return <AppSidebarSkeleton />;
   if (error) return <div>Error: {error}</div>;
 
-  const departmentsNavbar = tenants
-    ?.filter((tenant) => tenant.level === "department")
-    .map(
-      (tenant) =>
-        ({
-          title: tenant.name,
-          url: `/tenant-slugs/${tenant.slug}`,
-          icon: School,
-        }) as NavItem,
-    );
+  const departmentsNavbar = enrichTenantsToNavItems(
+  tenants.filter((tenant) => tenant.level === "department"),
+  School
+);
 
-  const divisionNavbar = tenants
-    ?.filter((tenant) => tenant.level === "division")
-    .map(
-      (tenant) =>
-        ({
-          title: tenant.name,
-          url: `/tenant-slugs/${tenant.slug}`,
-          icon: Building,
-        }) as NavItem,
-    );
+  const divisionNavbar = enrichTenantsToNavItems(
+  tenants.filter((tenant) => tenant.level === "division"),
+  Building
+);
 
   const newData = {
     version: data.versions,
@@ -266,6 +254,29 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   );
 }
 
+function enrichTenantsToNavItems(
+  tenants: Tenant[],
+  icon: React.ElementType
+): NavItem[] {
+  return tenants.map((tenant) => ({
+    title: tenant.name,
+    url: `/tenant-slugs/${tenant.slug}`,
+    icon,
+    items: tenant.relatedTenant?.docs.map((category) => ({
+      title: category.title,
+      url: `/categories/${category.slug}`,
+      icon: FolderIcon,
+    })),
+  }));
+}
+
+
+interface Category {
+  id: number;
+  title: string;
+  slug: string;
+}
+
 interface Tenant {
   id: string;
   name: string;
@@ -273,6 +284,9 @@ interface Tenant {
   domain?: string;
   // Add other tenant fields based on your schema
   level: "department" | "division";
+    relatedTenant?: {
+    docs: Category[];
+  };
 }
 
 const useTenants = () => {
