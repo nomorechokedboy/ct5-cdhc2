@@ -207,6 +207,8 @@ export const RichTextRenderer: React.FC<RichTextRendererProps> = ({
             // Check if it's an image
             const isImage = fileType.startsWith('image/') || 
                           /\.(jpg|jpeg|png|gif|webp|svg)$/i.test(fileName);
+            // Check if it's an video
+             const isVideo = fileType.startsWith('video/') || /\.(mp4|webm|ogg)$/i.test(fileName);
             
             if (isImage) {
               // Handle images
@@ -220,7 +222,27 @@ export const RichTextRenderer: React.FC<RichTextRendererProps> = ({
                 </figure>`;
               }
               return imgHtml;
-            } else {
+            }
+            else if(isVideo){
+
+              //Display video
+              let videoHtml = `<video controls style="max-width: 100%; height: auto; margin: 1em 0;">
+                <source src="${fileUrl}" type="${fileType || 'video/mp4'}" />
+                Trình duyệt của bạn không hỗ trợ thẻ video.
+              </video>`;
+              
+              if (caption) {
+                videoHtml = `<figure style="margin: 1em 0;">
+                  ${videoHtml}
+                  <figcaption style="text-align: center; font-style: italic; color: #666; font-size: 0.9em; margin-top: 0.5em;">
+                    ${caption}
+                  </figcaption>
+                </figure>`;
+              }
+
+              return videoHtml;
+            }
+            else {
               // Handle documents
               const fileSize = uploadData.filesize ? formatFileSize(uploadData.filesize) : '';
               const fileIcon = getFileIcon(fileType, fileName);
