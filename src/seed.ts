@@ -136,4 +136,59 @@ export const seed: NonNullable<Config["onInit"]> = async (
       title: "Page for Tenant 3",
     },
   });
+
+  await payload.create({
+    collection: "categories",
+    data :{
+      title: "Category A",
+      name: "Type 1",
+      tenants: [tenant1.id],
+    },
+  });
+
+  await payload.create({
+    collection: "categories",
+    data :{
+      title: "Category B",
+      name: "Type 2",
+      tenants: [tenant1.id],
+    },
+  });
+
+  await payload.create({
+    collection: "categories",
+    data :{
+      title: "Category C",
+      name: "Type 3",
+      tenants: [tenant2.id],
+    },
+  });
+
+  await payload.create({
+    collection: "categories",
+    data :{
+      title: "Category D",
+      name: "Type 4",
+      tenants: [tenant2.id],
+    },
+  });
+
+  await payload.create({
+    collection: "categories",
+    data :{
+      title: "Category E",
+      name: "Type 5",
+      tenants: [tenant3.id],
+    },
+  });
+
+  await payload.create({
+    collection: "categories",
+    data :{
+      title: "Category F",
+      name: "Type 6",
+      tenants: [tenant3.id],
+    },
+  });
+  
 };

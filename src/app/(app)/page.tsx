@@ -1,4 +1,6 @@
+
 export default async ({ params: paramsPromise }: { params: Promise<{ slug: string[] }> }) => {
+
   return (
     <div>
       <h1>Multi-Tenant Example</h1>
@@ -27,4 +29,25 @@ export default async ({ params: paramsPromise }: { params: Promise<{ slug: strin
       </p>
     </div>
   )
+}
+const useTenants = () => {
+const getPostData =  async () => {
+   try {
+      const response = await fetch("/api/posts[[0]"); // Adjust limit as needed
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch tenants");
+      }
+
+      const data = await response.json();
+    } catch (err) {
+      console.log('error', err);
+      
+    }
+
+      // useEffect(() => {
+      //   getPostData();
+      // }, []);
+   
+  };
 }

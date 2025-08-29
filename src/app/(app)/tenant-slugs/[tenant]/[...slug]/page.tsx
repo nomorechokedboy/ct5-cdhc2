@@ -9,7 +9,8 @@ import React from 'react'
 import { RenderPage } from '../../../../components/RenderPage'
 
 // eslint-disable-next-line no-restricted-exports
-export default async function Page({
+export default async function Page(
+  {
   params: paramsPromise,
 }: {
   params: Promise<{ slug?: string[]; tenant: string }>
