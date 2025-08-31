@@ -3,6 +3,8 @@ import { Config } from "payload";
 export const seed: NonNullable<Config["onInit"]> = async (
   payload,
 ): Promise<void> => {
+
+  //Seed tenants
   const tenant1 = await payload.create({
     collection: "tenants",
     data: {
@@ -33,6 +35,8 @@ export const seed: NonNullable<Config["onInit"]> = async (
     },
   });
 
+
+  //Seed users
   await payload.create({
     collection: "users",
     data: {
@@ -110,6 +114,7 @@ export const seed: NonNullable<Config["onInit"]> = async (
     },
   });
 
+  //Seed pages
   await payload.create({
     collection: "pages",
     data: {
@@ -137,7 +142,9 @@ export const seed: NonNullable<Config["onInit"]> = async (
     },
   });
 
-  await payload.create({
+
+  // Seed categories
+  const category1 = await payload.create({
     collection: "categories",
     data :{
       title: "Category A",
@@ -146,7 +153,7 @@ export const seed: NonNullable<Config["onInit"]> = async (
     },
   });
 
-  await payload.create({
+  const category2 = await payload.create({
     collection: "categories",
     data :{
       title: "Category B",
@@ -155,7 +162,7 @@ export const seed: NonNullable<Config["onInit"]> = async (
     },
   });
 
-  await payload.create({
+  const category3 = await payload.create({
     collection: "categories",
     data :{
       title: "Category C",
@@ -164,7 +171,7 @@ export const seed: NonNullable<Config["onInit"]> = async (
     },
   });
 
-  await payload.create({
+  const category4 = await payload.create({
     collection: "categories",
     data :{
       title: "Category D",
@@ -173,7 +180,7 @@ export const seed: NonNullable<Config["onInit"]> = async (
     },
   });
 
-  await payload.create({
+  const category5 = await payload.create({
     collection: "categories",
     data :{
       title: "Category E",
@@ -182,7 +189,7 @@ export const seed: NonNullable<Config["onInit"]> = async (
     },
   });
 
-  await payload.create({
+  const category6 = await payload.create({
     collection: "categories",
     data :{
       title: "Category F",
@@ -190,5 +197,237 @@ export const seed: NonNullable<Config["onInit"]> = async (
       tenants: [tenant3.id],
     },
   });
+
+  //Seed posts
+
+    await payload.create({
+    collection: "posts",
+    data: {
+      title: "Post 1",
+      content: {
+        root: {
+          type: "root",
+          format: "",
+          indent: 0,
+          version: 1,
+          direction: "ltr",
+          children: [
+            {
+              type: "paragraph",
+              version: 1,
+              direction: "ltr",
+              format: "",
+              indent: 0,
+              children: [
+                {
+                  type: "text",
+                  text: "Đây là bài viết giới thiệu về Phòng TM - HC.",
+                  version: 1,
+                  detail: 0,
+                  mode: "normal",
+                  style: "",
+                  format: 0,
+                },
+              ],
+            },
+          ],
+        },
+      },
+      categories: [category1], 
+      publishedAt: new Date().toISOString(),
+    },
+  });
+  
+    await payload.create({
+    collection: "posts",
+    data: {
+      title: "Post 2",
+      content: {
+        root: {
+          type: "root",
+          format: "",
+          indent: 0,
+          version: 1,
+          direction: "ltr",
+          children: [
+            {
+              type: "paragraph",
+              version: 1,
+              direction: "ltr",
+              format: "",
+              indent: 0,
+              children: [
+                {
+                  type: "text",
+                  text: "Đây là bài viết giới thiệu về Phòng TM - HC.",
+                  version: 1,
+                  detail: 0,
+                  mode: "normal",
+                  style: "",
+                  format: 0,
+                },
+              ],
+            },
+          ],
+        },
+      },
+      categories: [category2], 
+      publishedAt: new Date().toISOString(),
+    },
+  });
+
+    await payload.create({
+    collection: "posts",
+    data: {
+      title: "Post 3",
+      content: {
+        root: {
+          type: "root",
+          format: "",
+          indent: 0,
+          version: 1,
+          direction: "ltr",
+          children: [
+            {
+              type: "paragraph",
+              version: 1,
+              direction: "ltr",
+              format: "",
+              indent: 0,
+              children: [
+                {
+                  type: "text",
+                  text: "Đây là bài viết giới thiệu về Phòng TM - HC.",
+                  version: 1,
+                  detail: 0,
+                  mode: "normal",
+                  style: "",
+                  format: 0,
+                },
+              ],
+            },
+          ],
+        },
+      },
+      categories: [category3], 
+      publishedAt: new Date().toISOString(),
+    },
+  });
+
+    await payload.create({
+    collection: "posts",
+    data: {
+      title: "Post 4",
+      content: {
+        root: {
+          type: "root",
+          format: "",
+          indent: 0,
+          version: 1,
+          direction: "ltr",
+          children: [
+            {
+              type: "paragraph",
+              version: 1,
+              direction: "ltr",
+              format: "",
+              indent: 0,
+              children: [
+                {
+                  type: "text",
+                  text: "Đây là bài viết giới thiệu về Phòng TM - HC.",
+                  version: 1,
+                  detail: 0,
+                  mode: "normal",
+                  style: "",
+                  format: 0,
+                },
+              ],
+            },
+          ],
+        },
+      },
+      categories: [category4], 
+      publishedAt: new Date().toISOString(),
+    },
+  });
+  
+    await payload.create({
+    collection: "posts",
+    data: {
+      title: "Post 5",
+      content: {
+        root: {
+          type: "root",
+          format: "",
+          indent: 0,
+          version: 1,
+          direction: "ltr",
+          children: [
+            {
+              type: "paragraph",
+              version: 1,
+              direction: "ltr",
+              format: "",
+              indent: 0,
+              children: [
+                {
+                  type: "text",
+                  text: "Đây là bài viết giới thiệu về Phòng TM - HC.",
+                  version: 1,
+                  detail: 0,
+                  mode: "normal",
+                  style: "",
+                  format: 0,
+                },
+              ],
+            },
+          ],
+        },
+      },
+      categories: [category5], 
+      publishedAt: new Date().toISOString(),
+    },
+  });
+  
+
+    await payload.create({
+    collection: "posts",
+    data: {
+      title: "Post 6",
+      content: {
+        root: {
+          type: "root",
+          format: "",
+          indent: 0,
+          version: 1,
+          direction: "ltr",
+          children: [
+            {
+              type: "paragraph",
+              version: 1,
+              direction: "ltr",
+              format: "",
+              indent: 0,
+              children: [
+                {
+                  type: "text",
+                  text: "Đây là bài viết giới thiệu về Phòng TM - HC.",
+                  version: 1,
+                  detail: 0,
+                  mode: "normal",
+                  style: "",
+                  format: 0,
+                },
+              ],
+            },
+          ],
+        },
+      },
+      categories: [category6], 
+      publishedAt: new Date().toISOString(),
+    },
+  });
+  
   
 };

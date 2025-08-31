@@ -219,6 +219,7 @@ export interface User {
 export interface Post {
   id: number;
   title?: string | null;
+  excerpt?: string | null;
   content?: {
     root: {
       type: string;
@@ -479,6 +480,7 @@ export interface CategoriesSelect<T extends boolean = true> {
  */
 export interface PostsSelect<T extends boolean = true> {
   title?: T;
+  excerpt?: T;
   content?: T;
   publishedAt?: T;
   categories?: T;

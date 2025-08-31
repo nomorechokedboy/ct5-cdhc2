@@ -207,7 +207,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           {!isCollapsed && (
             <div className="flex flex-col">
               <span className="text-sm font-semibold">
-                Hệ thống quản lý học viên
+                Hướng dẫn xử lí thủ tục hành chính
               </span>
               <span className="text-xs text-muted-foreground">
                 Trường Cao đẳng hậu cần 2

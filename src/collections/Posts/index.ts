@@ -43,7 +43,10 @@ export const Posts: CollectionConfig = {
       name: 'title',
       type: 'text',
     },
-    
+    {
+      name: 'excerpt',
+      type: 'text',
+    },
      {
       name: 'content',
       type: 'richText',

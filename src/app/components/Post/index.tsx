@@ -1,11 +1,27 @@
-"use client";
+"use client"
 
-import React, { useEffect, useState } from 'react';
+import { useState, useEffect } from "react"
+import { useParams, useRouter, useSearchParams } from "next/navigation"
+import {
+  ArrowLeft,
+  Calendar,
+  Download,
+} from "lucide-react"
+import { Card, CardContent, CardHeader } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { Separator } from "@/components/ui/separator"
 
 interface Post {
   id: string;
   title?: string;
   content: any;
+  publishedAt?: string;
+  categories?: Array<{
+    id: string;
+    title?: string;
+    name?: string;
+  }> | string[];
   createdAt?: string;
   updatedAt?: string;
 }
@@ -15,19 +31,23 @@ interface RichTextRendererProps {
   className?: string;
 }
 
+
+
+// Helper function to format file size
+const formatFileSize = (size: string | number) => {
+  if (typeof size === 'string') return size;
+  
+  if (size === 0) return '0 Bytes';
+  const k = 1024;
+  const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+  const i = Math.floor(Math.log(size) / Math.log(k));
+  return parseFloat((size / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+}
+
 export const RichTextRenderer: React.FC<RichTextRendererProps> = ({ 
   content, 
   className = "richtext-content" 
 }) => {
-  // Helper function to format file size
-  const formatFileSize = (bytes: number): string => {
-    if (bytes === 0) return '0 Bytes';
-    const k = 1024;
-    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
-  };
-
   // Helper function to get file icon
   const getFileIcon = (mimeType: string, fileName: string): string => {
     if (mimeType?.includes('pdf') || fileName?.endsWith('.pdf')) return '📄';
@@ -101,7 +121,7 @@ export const RichTextRenderer: React.FC<RichTextRendererProps> = ({
           return pContent ? `<p>${pContent}</p>` : '';
         
         case 'heading':
-          const level = node.tag || '1';
+          const level = node.tag?.replace('h', '') || '1';
           const hContent = node.children?.map(processNode).join('') || '';
           return hContent ? `<h${level}>${hContent}</h${level}>` : '';
         
@@ -109,12 +129,19 @@ export const RichTextRenderer: React.FC<RichTextRendererProps> = ({
           let text = node.text || '';
           if (!text) return '';
           
-          // Apply formatting
+          // Apply formatting - check if format is array or number
           if (node.format) {
-            if (node.format & 1) text = `<strong>${text}</strong>`; // bold
-            if (node.format & 2) text = `<em>${text}</em>`; // italic
-            if (node.format & 4) text = `<u>${text}</u>`; // underline
-            if (node.format & 8) text = `<s>${text}</s>`; // strikethrough
+            if (Array.isArray(node.format)) {
+              if (node.format.includes('bold')) text = `<strong>${text}</strong>`;
+              if (node.format.includes('italic')) text = `<em>${text}</em>`;
+              if (node.format.includes('underline')) text = `<u>${text}</u>`;
+              if (node.format.includes('strikethrough')) text = `<s>${text}</s>`;
+            } else if (typeof node.format === 'number') {
+              if (node.format & 1) text = `<strong>${text}</strong>`; // bold
+              if (node.format & 2) text = `<em>${text}</em>`; // italic
+              if (node.format & 4) text = `<u>${text}</u>`; // underline
+              if (node.format & 8) text = `<s>${text}</s>`; // strikethrough
+            }
           }
           return text;
         
@@ -224,7 +251,6 @@ export const RichTextRenderer: React.FC<RichTextRendererProps> = ({
               return imgHtml;
             }
             else if(isVideo){
-
               //Display video
               let videoHtml = `<video controls style="max-width: 100%; height: auto; margin: 1em 0;">
                 <source src="${fileUrl}" type="${fileType || 'video/mp4'}" />
@@ -486,92 +512,166 @@ export const RichTextRenderer: React.FC<RichTextRendererProps> = ({
   );
 };
 
-// Component chính để fetch và hiển thị posts
-export const Post = () => {
-  const [post, setPost] = useState<Post | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+export default function PostDetailPage() {
+  const router = useRouter()
+  const searchParams = useSearchParams()
+  const [post, setPost] = useState<Post | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+  const [category, setCategory] = useState(null)
+  
+  const id = searchParams.get("id")
 
   const getPost = async () => {
+    if (!id) {
+      setError('No post ID provided')
+      setLoading(false)
+      return
+    }
+
     try {
-      setLoading(true);
-      const res = await fetch('http://localhost:3000/api/posts');
+      setLoading(true)
+      setError(null)
+      
+      const res = await fetch('http://localhost:3000/api/posts')
       
       if (!res.ok) {
-        throw new Error(`HTTP error! status: ${res.status}`);
+        throw new Error(`HTTP error! status: ${res.status}`)
       }
       
-      const data = await res.json();
-      console.log('Fetched data:', data);
-      
-      if (data?.docs?.[0]) {
-        setPost(data.docs[0]);
+      const data = await res.json()
+      console.log('Fetched data:', data)
+
+      // Lọc bài viết theo id 
+      const filteredPosts = data.docs.filter((post: {id: string | null}) => post.id  == id)
+      console.log('id:', id)
+      console.log('filteredPosts:', filteredPosts)
+
+      if (filteredPosts && filteredPosts.length > 0) {
+        setPost(filteredPosts[0])
+        if(filteredPosts.categories?.lenght > 0){
+          const categorydata = filteredPosts.categories.map((category: { slug: string }) => category.slug)
+          setCategory(categorydata)
+          console.log('categorydata', categorydata);
+          
+        }
       } else {
-        setError('No posts found');
+        setError('Post not found')
       }
     } catch (error) {
-      console.error('Error fetching posts:', error);
-      setError(error instanceof Error ? error.message : 'Failed to fetch posts');
+      console.error('Error fetching posts:', error)
+      setError(error instanceof Error ? error.message : 'Failed to fetch posts')
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   useEffect(() => {
-    getPost();
-  }, []);
+    getPost()
+  }, [id])
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center p-8">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-        <span className="ml-2">Loading...</span>
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
       </div>
-    );
+    )
   }
 
   if (error) {
     return (
-      <div className="p-4 bg-red-100 border border-red-400 text-red-700 rounded">
-        <strong>Error:</strong> {error}
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl font-semibold mb-2 text-red-600">Error</h1>
+          <p className="text-muted-foreground mb-4">{error}</p>
+          <Button onClick={() => router.push("/")}>
+            <ArrowLeft className="h-4 w-4 mr-2" />
+            Back to Posts
+          </Button>
+        </div>
       </div>
-    );
+    )
   }
 
   if (!post) {
-    return <div className="p-4 text-gray-600">No post found</div>;
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl font-semibold mb-2">Post not found</h1>
+          <p className="text-muted-foreground mb-4">The post you're looking for doesn't exist.</p>
+          <Button onClick={() => router.push("/")}>
+            <ArrowLeft className="h-4 w-4 mr-2" />
+            Back to Posts
+          </Button>
+        </div>
+      </div>
+    )
   }
 
   return (
-    <div className="max-w-4xl mx-auto p-6">
-      {post.title && (
-        <h1 className="text-3xl font-bold mb-6 text-gray-900 border-b pb-4">
-          {post.title}
-        </h1>
-      )}
-      
-      <article className="prose prose-lg max-w-none">
-        <RichTextRenderer content={post.content} />
-      </article>
-      
-      {/* Debug info - chỉ hiển thị trong development */}
-      {process.env.NODE_ENV === 'development' && post.content && (
-        <details className="mt-8 p-4 bg-gray-50 border rounded-lg">
-          <summary className="cursor-pointer font-medium text-gray-700 hover:text-gray-900">
-            🔍 Debug: Raw Lexical Data
-          </summary>
-          <div className="mt-3">
-            <pre className="text-xs bg-white p-3 rounded border overflow-x-auto">
-              {JSON.stringify(post.content, null, 2)}
-            </pre>
-          </div>
-        </details>
-      )}
-    </div>
-  );
-};
+    <div className="min-h-screen bg-background">
+      <div className="max-w-4xl mx-auto px-4 py-8">
+        {/* Header with back button */}
+        <div className="mb-8">
+          <Button variant="ghost" onClick={() => router.push("/")} className="mb-4 -ml-2">
+            <ArrowLeft className="h-4 w-4 mr-2" />
+            Back to Posts
+          </Button>
+        </div>
 
-// Export utility function để sử dụng riêng lẻ
-export const renderLexicalContent = (content: any, className?: string) => {
-  return <RichTextRenderer content={content} className={className} />;
-};
+        {/* Post header */}
+        <header className="mb-8">
+          {post.categories && post.categories.length > 0 && (
+            <div className="flex items-center gap-2 mb-4 flex-wrap">
+              {post.categories.map((category, index) => (
+                <Badge key={index} variant="secondary">
+                  {typeof category === 'string' ? category : (category.title || category.name)}
+                </Badge>
+              ))}
+            </div>
+          )}
+
+          <h1 className="text-4xl font-bold text-balance mb-4">{post.title || 'Untitled'}</h1>
+
+          <div className="flex items-center gap-6 text-sm text-muted-foreground">
+            {post.publishedAt && (
+              <div className="flex items-center gap-1">
+                <Calendar className="h-4 w-4" />
+                <span>
+                  {new Date(post.publishedAt).toLocaleDateString("en-vi", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  })}
+                </span>
+              </div>
+            )}
+            
+            {post.createdAt && !post.publishedAt && (
+              <div className="flex items-center gap-1">
+                <Calendar className="h-4 w-4" />
+                <span>
+                  {new Date(post.createdAt).toLocaleDateString("en-US", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  })}
+                </span>
+              </div>
+            )}
+          </div>
+        </header>
+
+        <Separator className="mb-8" />
+
+        {/* Post content */}
+        <article className="mb-8">
+          <RichTextRenderer content={post.content} />
+        </article>
+      </div>
+
+     
+        
+    </div>
+  )
+}
