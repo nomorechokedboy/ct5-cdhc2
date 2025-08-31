@@ -697,7 +697,7 @@ export default function PostDetailPage() {
             className="mb-4 -ml-2"
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
-            Back to Posts
+            Về danh sách bài viết
           </Button>
         </div>
 

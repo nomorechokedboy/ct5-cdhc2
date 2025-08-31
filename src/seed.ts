@@ -203,7 +203,8 @@ export const seed: NonNullable<Config["onInit"]> = async (
     await payload.create({
     collection: "posts",
     data: {
-      title: "Post 1",
+      title: "Bài viết 1",
+      excerpt:"Đây là bài viết giới thiệu về Phòng TM - HC.",
       content: {
         root: {
           type: "root",
@@ -241,7 +242,8 @@ export const seed: NonNullable<Config["onInit"]> = async (
     await payload.create({
     collection: "posts",
     data: {
-      title: "Post 2",
+      title: "Bài viết 2",
+      excerpt:"Đây là bài viết giới thiệu về Phòng TM - HC.",
       content: {
         root: {
           type: "root",
@@ -279,7 +281,8 @@ export const seed: NonNullable<Config["onInit"]> = async (
     await payload.create({
     collection: "posts",
     data: {
-      title: "Post 3",
+      title: "Bài viết 3",
+      excerpt:"Đây là bài viết giới thiệu về Phòng TM - HC.",
       content: {
         root: {
           type: "root",
@@ -317,7 +320,8 @@ export const seed: NonNullable<Config["onInit"]> = async (
     await payload.create({
     collection: "posts",
     data: {
-      title: "Post 4",
+      title: "Bài viết 4",
+      excerpt:"Đây là bài viết giới thiệu về Phòng TM - HC.",
       content: {
         root: {
           type: "root",
@@ -355,7 +359,8 @@ export const seed: NonNullable<Config["onInit"]> = async (
     await payload.create({
     collection: "posts",
     data: {
-      title: "Post 5",
+      title: "Bài viết 5",
+      excerpt:"Đây là bài viết giới thiệu về Phòng TM - HC.",
       content: {
         root: {
           type: "root",
@@ -394,7 +399,8 @@ export const seed: NonNullable<Config["onInit"]> = async (
     await payload.create({
     collection: "posts",
     data: {
-      title: "Post 6",
+      title: "Bài viết 6",
+      excerpt:"Đây là bài viết giới thiệu về Phòng TM - HC.",
       content: {
         root: {
           type: "root",
