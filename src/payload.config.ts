@@ -5,7 +5,7 @@ import { buildConfig } from "payload";
 import { fileURLToPath } from "url";
 import { Categories } from "./collections/Categories";
 import { Pages } from "./collections/Pages";
-import {Posts} from "./collections/Posts";
+import { Posts } from "./collections/Posts";
 import { Tenants } from "./collections/Tenants";
 import Users from "./collections/Users";
 import { Media } from "./collections/Media";
@@ -14,20 +14,23 @@ import { isSuperAdmin } from "./access/isSuperAdmin";
 import type { Config } from "./payload-types";
 import { getUserTenantIDs } from "./utilities/getUserTenantIDs";
 import { seed } from "./seed";
-import { type Payload } from 'payload'
+import { type Payload } from "payload";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
-
-
-
 
 // eslint-disable-next-line no-restricted-exports
 export default buildConfig({
   admin: {
     user: "users",
+    components: {
+      logout: { Button: "@/components/logout-button" },
+    },
+    importMap: {
+      baseDir: path.resolve(dirname),
+    },
   },
-  collections: [Pages, Users, Tenants,Categories, Posts, Media],
+  collections: [Pages, Users, Tenants, Categories, Posts, Media],
 
   db: sqliteAdapter({
     client: {
@@ -69,6 +72,4 @@ export default buildConfig({
       userHasAccessToAllTenants: (user) => isSuperAdmin(user),
     }),
   ],
-
-   
 });
