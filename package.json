@@ -11,6 +11,7 @@
 		"generate:importmap": "cross-env NODE_OPTIONS=--no-deprecation payload generate:importmap",
 		"generate:schema": "payload-graphql generate:schema",
 		"generate:types": "payload generate:types",
+		"migrate:create": "payload migrate:create",
 		"payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
 		"seed": "npm run payload migrate:fresh",
 		"start": "cross-env NODE_OPTIONS=--no-deprecation next start",
