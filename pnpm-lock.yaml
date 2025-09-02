@@ -134,6 +134,10 @@ importers:
             typescript:
                 specifier: 5.5.2
                 version: 5.5.2
+        optionalDependencies:
+            '@libsql/linux-x64-musl':
+                specifier: ^0.5.20
+                version: 0.5.20
 
 packages:
     '@alloc/quick-lru@5.2.0':
