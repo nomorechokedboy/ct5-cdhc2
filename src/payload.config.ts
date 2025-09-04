@@ -72,4 +72,20 @@ export default buildConfig({
       userHasAccessToAllTenants: (user) => isSuperAdmin(user),
     }),
   ],
+
+  endpoints: [
+    {
+  path: "/public/tenants",
+  method: "get",
+  handler: async (req) => {
+    const tenants = await req.payload.find({
+      collection: "tenants",
+      limit: 1000,
+      overrideAccess: true,
+    })
+
+    return Response.json(tenants) // 👈 dùng Web Response API
+  },
+}
+  ],
 });

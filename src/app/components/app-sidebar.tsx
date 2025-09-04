@@ -297,7 +297,8 @@ const useTenants = () => {
   const fetchTenants = async () => {
     try {
       setLoading(true);
-      const response = await fetch("/api/tenants?limit=1000"); // Adjust limit as needed
+      const response = await fetch("/api/public/tenants?limit=1000"); // Adjust limit as needed
+      
 
       if (!response.ok) {
         throw new Error("Failed to fetch tenants");
