@@ -48,6 +48,7 @@ export const Categories: CollectionConfig = {
      {
       name: 'tenants',
       type: 'relationship',
+      required: true, 
       admin: {
         position: 'sidebar',
       },
