@@ -91,12 +91,10 @@ export const Posts: CollectionConfig = {
           UploadFeature({
             collections: {
               media: {
-                // Tên collection chứa media/uploads của bạn
                 fields: [
                   {
                     name: 'alt',
                     type: 'text',
-                    required: true,
                   },
                 ],
               },

@@ -147,7 +147,7 @@ export const seed: NonNullable<Config["onInit"]> = async (
   const category1 = await payload.create({
     collection: "categories",
     data :{
-      title: "Category A",
+      title: "Thể loại A",
       name: "Type 1",
       tenants: [tenant1.id],
     },
@@ -156,7 +156,7 @@ export const seed: NonNullable<Config["onInit"]> = async (
   const category2 = await payload.create({
     collection: "categories",
     data :{
-      title: "Category B",
+      title: "Thể loại B",
       name: "Type 2",
       tenants: [tenant1.id],
     },
@@ -165,7 +165,7 @@ export const seed: NonNullable<Config["onInit"]> = async (
   const category3 = await payload.create({
     collection: "categories",
     data :{
-      title: "Category C",
+      title: "Thể loại C",
       name: "Type 3",
       tenants: [tenant2.id],
     },
@@ -174,7 +174,7 @@ export const seed: NonNullable<Config["onInit"]> = async (
   const category4 = await payload.create({
     collection: "categories",
     data :{
-      title: "Category D",
+      title: "Thể loại D",
       name: "Type 4",
       tenants: [tenant2.id],
     },
@@ -183,7 +183,7 @@ export const seed: NonNullable<Config["onInit"]> = async (
   const category5 = await payload.create({
     collection: "categories",
     data :{
-      title: "Category E",
+      title: "Thể loại E",
       name: "Type 5",
       tenants: [tenant3.id],
     },
@@ -192,7 +192,7 @@ export const seed: NonNullable<Config["onInit"]> = async (
   const category6 = await payload.create({
     collection: "categories",
     data :{
-      title: "Category F",
+      title: "Thể loại F",
       name: "Type 6",
       tenants: [tenant3.id],
     },
@@ -222,7 +222,7 @@ export const seed: NonNullable<Config["onInit"]> = async (
               children: [
                 {
                   type: "text",
-                  text: "Đây là bài viết giới thiệu về Phòng TM - HC.",
+                  text: "Nhà trường quân sự đẩy mạnh cải cách, đơn giản hóa thủ tục hành chính nhằm nâng cao hiệu quả quản lý, phục vụ tốt hơn cho cán bộ, giảng viên và học viên.",
                   version: 1,
                   detail: 0,
                   mode: "normal",
@@ -243,7 +243,7 @@ export const seed: NonNullable<Config["onInit"]> = async (
     collection: "posts",
     data: {
       title: "Bài viết 2",
-      excerpt:"Đây là bài viết giới thiệu về Phòng TM - HC.",
+      excerpt:"Nhà trường quân sự đẩy mạnh cải cách, đơn giản hóa thủ tục hành chính nhằm nâng cao hiệu quả quản lý, phục vụ tốt hơn cho cán bộ, giảng viên và học viên.",
       content: {
         root: {
           type: "root",
@@ -261,7 +261,7 @@ export const seed: NonNullable<Config["onInit"]> = async (
               children: [
                 {
                   type: "text",
-                  text: "Đây là bài viết giới thiệu về Phòng TM - HC.",
+                  text: "Nhà trường quân sự đẩy mạnh cải cách, đơn giản hóa thủ tục hành chính nhằm nâng cao hiệu quả quản lý, phục vụ tốt hơn cho cán bộ, giảng viên và học viên.",
                   version: 1,
                   detail: 0,
                   mode: "normal",
@@ -282,7 +282,7 @@ export const seed: NonNullable<Config["onInit"]> = async (
     collection: "posts",
     data: {
       title: "Bài viết 3",
-      excerpt:"Đây là bài viết giới thiệu về Phòng TM - HC.",
+      excerpt:"Nhà trường quân sự đẩy mạnh cải cách, đơn giản hóa thủ tục hành chính nhằm nâng cao hiệu quả quản lý, phục vụ tốt hơn cho cán bộ, giảng viên và học viên.",
       content: {
         root: {
           type: "root",
@@ -300,7 +300,7 @@ export const seed: NonNullable<Config["onInit"]> = async (
               children: [
                 {
                   type: "text",
-                  text: "Đây là bài viết giới thiệu về Phòng TM - HC.",
+                  text: "Nhà trường quân sự đẩy mạnh cải cách, đơn giản hóa thủ tục hành chính nhằm nâng cao hiệu quả quản lý, phục vụ tốt hơn cho cán bộ, giảng viên và học viên.",
                   version: 1,
                   detail: 0,
                   mode: "normal",
@@ -321,7 +321,7 @@ export const seed: NonNullable<Config["onInit"]> = async (
     collection: "posts",
     data: {
       title: "Bài viết 4",
-      excerpt:"Đây là bài viết giới thiệu về Phòng TM - HC.",
+      excerpt:"Nhà trường quân sự đẩy mạnh cải cách, đơn giản hóa thủ tục hành chính nhằm nâng cao hiệu quả quản lý, phục vụ tốt hơn cho cán bộ, giảng viên và học viên.",
       content: {
         root: {
           type: "root",
@@ -339,7 +339,7 @@ export const seed: NonNullable<Config["onInit"]> = async (
               children: [
                 {
                   type: "text",
-                  text: "Đây là bài viết giới thiệu về Phòng TM - HC.",
+                  text: "Nhà trường quân sự đẩy mạnh cải cách, đơn giản hóa thủ tục hành chính nhằm nâng cao hiệu quả quản lý, phục vụ tốt hơn cho cán bộ, giảng viên và học viên.",
                   version: 1,
                   detail: 0,
                   mode: "normal",
@@ -360,7 +360,7 @@ export const seed: NonNullable<Config["onInit"]> = async (
     collection: "posts",
     data: {
       title: "Bài viết 5",
-      excerpt:"Đây là bài viết giới thiệu về Phòng TM - HC.",
+      excerpt:"Nhà trường quân sự đẩy mạnh cải cách, đơn giản hóa thủ tục hành chính nhằm nâng cao hiệu quả quản lý, phục vụ tốt hơn cho cán bộ, giảng viên và học viên.",
       content: {
         root: {
           type: "root",
@@ -378,7 +378,7 @@ export const seed: NonNullable<Config["onInit"]> = async (
               children: [
                 {
                   type: "text",
-                  text: "Đây là bài viết giới thiệu về Phòng TM - HC.",
+                  text: "Nhà trường quân sự đẩy mạnh cải cách, đơn giản hóa thủ tục hành chính nhằm nâng cao hiệu quả quản lý, phục vụ tốt hơn cho cán bộ, giảng viên và học viên.",
                   version: 1,
                   detail: 0,
                   mode: "normal",
@@ -400,7 +400,7 @@ export const seed: NonNullable<Config["onInit"]> = async (
     collection: "posts",
     data: {
       title: "Bài viết 6",
-      excerpt:"Đây là bài viết giới thiệu về Phòng TM - HC.",
+      excerpt:"Nhà trường quân sự đẩy mạnh cải cách, đơn giản hóa thủ tục hành chính nhằm nâng cao hiệu quả quản lý, phục vụ tốt hơn cho cán bộ, giảng viên và học viên.",
       content: {
         root: {
           type: "root",
@@ -418,7 +418,7 @@ export const seed: NonNullable<Config["onInit"]> = async (
               children: [
                 {
                   type: "text",
-                  text: "Đây là bài viết giới thiệu về Phòng TM - HC.",
+                  text: "Nhà trường quân sự đẩy mạnh cải cách, đơn giản hóa thủ tục hành chính nhằm nâng cao hiệu quả quản lý, phục vụ tốt hơn cho cán bộ, giảng viên và học viên.",
                   version: 1,
                   detail: 0,
                   mode: "normal",

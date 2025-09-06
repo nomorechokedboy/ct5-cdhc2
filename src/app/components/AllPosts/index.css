@@ -1,0 +1,88 @@
+/* Cách 1: Sử dụng CSS Grid */
+.sidebar-provider {
+    height: 100vh;
+    display: grid;
+    grid-template-columns: auto 1fr;
+}
+
+.sidebar-inset {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.main-content {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+/* Cách 2: Sử dụng Flexbox */
+.fullscreen-layout {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-inset-fullscreen {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.header-fixed {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: white;
+}
+
+.main-flex {
+    flex: 1;
+    min-height: 0;
+    /* Quan trọng để flex hoạt động đúng */
+}
+
+/* Cách 3: Viewport units */
+.viewport-layout {
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+}
+
+.content-area {
+    height: calc(100vh - 4rem);
+    /* Trừ đi height của header (h-16 = 4rem) */
+    overflow-y: auto;
+}
+
+/* Cách 4: Container queries (modern browsers) */
+@container (min-height: 100vh) {
+    .adaptive-layout {
+        height: 100cqh;
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+/* Reset để đảm bảo không có margin/padding mặc định */
+.layout-reset {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Đảm bảo body và html cũng full height */
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+#root,
+#__next {
+    height: 100%;
+}

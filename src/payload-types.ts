@@ -173,7 +173,7 @@ export interface Category {
   id: number;
   title: string;
   name: string;
-  tenants?: (number | Tenant)[] | null;
+  tenants: (number | Tenant)[];
   slug?: string | null;
   slugLock?: boolean | null;
   updatedAt: string;
