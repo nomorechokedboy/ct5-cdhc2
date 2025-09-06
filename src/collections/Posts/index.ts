@@ -38,18 +38,32 @@ export const Posts: CollectionConfig = {
   admin: {
     useAsTitle: 'title',
   },
+
+   labels: {
+    singular: {
+      en: 'Post',
+      vi: 'Bài viết',
+    },
+    plural: {
+      en: 'Posts', 
+      vi: 'Bài viết',
+    },
+  },
   fields: [
     {
       name: 'title',
       type: 'text',
+       localized: true,
     },
     {
       name: 'excerpt',
       type: 'text',
+       localized: true,
     },
      {
       name: 'content',
       type: 'richText',
+       localized: true,
       editor: lexicalEditor({
         features: ({ defaultFeatures }) => [
           ...defaultFeatures,
@@ -95,6 +109,7 @@ export const Posts: CollectionConfig = {
                   {
                     name: 'alt',
                     type: 'text',
+                    // required: true,
                   },
                 ],
               },

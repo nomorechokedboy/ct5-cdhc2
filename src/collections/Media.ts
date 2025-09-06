@@ -26,11 +26,33 @@ export const Media: CollectionConfig = {
     {
       name: 'alt',
       type: 'text',
+       localized: true,
+       label: {
+        en: 'Alt Text',
+        vi: 'Mô tả ảnh',
+      },
+      admin: {
+        description: {
+          en: 'Alternative text for screen readers',
+          vi: 'Văn bản thay thế cho trình đọc màn hình',
+        },
+      },
       // required: true,
     },
     {
       name: 'caption',
       type: 'richText',
+      localized: true,
+      label: {
+        en: 'Caption',
+        vi: 'Chú thích',
+      },
+      admin: {
+        description: {
+          en: 'Optional caption for the media',
+          vi: 'Chú thích tùy chọn cho media',
+        },
+      },
       editor: lexicalEditor({
         features: ({ rootFeatures }) => {
           return [...rootFeatures, FixedToolbarFeature(), InlineToolbarFeature()]

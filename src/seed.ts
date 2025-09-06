@@ -204,7 +204,7 @@ export const seed: NonNullable<Config["onInit"]> = async (
     collection: "posts",
     data: {
       title: "Bài viết 1",
-      excerpt:"Đây là bài viết giới thiệu về Phòng TM - HC.",
+      excerpt:"ĐNhà trường quân sự đẩy mạnh cải cách, đơn giản hóa thủ tục hành chính nhằm nâng cao hiệu quả quản lý, phục vụ tốt hơn cho cán bộ, giảng viên và học viên.",
       content: {
         root: {
           type: "root",

@@ -98,7 +98,7 @@ export interface Config {
   };
   globals: {};
   globalsSelect: {};
-  locale: null;
+  locale: 'vi' | 'en';
   user: User & {
     collection: 'users';
   };
@@ -246,7 +246,13 @@ export interface Post {
  */
 export interface Media {
   id: number;
+  /**
+   * Alternative text for screen readers
+   */
   alt?: string | null;
+  /**
+   * Optional caption for the media
+   */
   caption?: {
     root: {
       type: string;
