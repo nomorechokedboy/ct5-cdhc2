@@ -149,12 +149,11 @@ export const RichTextRenderer: React.FC<RichTextRendererProps> = ({
 
   // Main function to convert Lexical to HTML
   const lexicalToHtml = (lexicalData: any): string => {
-    if (!lexicalData?.root?.children) {
-      return "<p>No content available</p>";
-    }
-
-    const processNode = (node: any): string => {
+    console.log("lexicalData:", lexicalData); // Debug log
+     const processNode = (node: any): string => {
       if (!node) return "";
+
+      console.log("Processing node:", node.type, node); // Debug log
 
       switch (node.type) {
         case "paragraph":
@@ -186,6 +185,12 @@ export const RichTextRenderer: React.FC<RichTextRendererProps> = ({
               if (node.format & 8) text = `<s>${text}</s>`; // strikethrough
             }
           }
+
+          // Handle text styles
+          if (node.style) {
+            text = `<span style="${node.style}">${text}</span>`;
+          }
+
           return text;
 
         case "list":
@@ -417,8 +422,61 @@ export const RichTextRenderer: React.FC<RichTextRendererProps> = ({
       }
     };
 
+
+    // Handle different content structures
+    if (!lexicalData) {
+      return "<p>No content available</p>";
+    }
+
+    // If content is a string, return it directly
+    if (typeof lexicalData === "string") {
+      return `<p>${lexicalData}</p>`;
+    }
+
+    // Handle array of content blocks
+    if (Array.isArray(lexicalData)) {
+      return lexicalData.map(processNode).join("");
+    }
+
+    // Handle Lexical editor format
+    if (!lexicalData.root && !lexicalData.children) {
+      console.log("No root or children found in content");
+      return "<p>No content available</p>";
+    }
+
+   
+    // Handle different content structures
+    if (!lexicalData) {
+      return "<p>No content available</p>";
+    }
+
+    // If content is a string, return it directly
+    if (typeof lexicalData === "string") {
+      return `<p>${lexicalData}</p>`;
+    }
+
+    // Handle array of content blocks
+    if (Array.isArray(lexicalData)) {
+      return lexicalData.map(processNode).join("");
+    }
+
+    // Handle Lexical editor format
+    if (!lexicalData.root && !lexicalData.children) {
+      console.log("No root or children found in content");
+      return "<p>No content available</p>";
+    }
+
     try {
-      return lexicalData.root.children.map(processNode).join("");
+      // Handle different content structures
+      if (lexicalData.root?.children) {
+        return lexicalData.root.children.map(processNode).join("");
+      } else if (lexicalData.children) {
+        return lexicalData.children.map(processNode).join("");
+      } else if (Array.isArray(lexicalData)) {
+        return lexicalData.map(processNode).join("");
+      } else {
+        return processNode(lexicalData);
+      }
     } catch (error) {
       console.error("Error parsing Lexical data:", error);
       return "<p>Error parsing content</p>";
@@ -429,10 +487,14 @@ export const RichTextRenderer: React.FC<RichTextRendererProps> = ({
     return <div className="text-gray-500 italic">No content available</div>;
   }
 
+  // Debug: Log content structure
+  console.log("Content being rendered:", content);
+  
   const htmlContent = lexicalToHtml(content);
+  console.log("Generated HTML:", htmlContent);
 
   return (
-    <>
+    <div className="richtext-wrapper">
       <div
         className={className}
         dangerouslySetInnerHTML={{ __html: htmlContent }}
@@ -440,142 +502,157 @@ export const RichTextRenderer: React.FC<RichTextRendererProps> = ({
 
       {/* CSS Styles */}
       <style jsx>{`
-        .${className} {
-          font-family:
-            -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-          line-height: 1.6;
-          color: #333;
-          word-wrap: break-word;
-        }
+  :global(.richtext-wrapper .${className}) {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    word-wrap: break-word;
+  }
 
-        .${className} img {
-          max-width: 100%;
-          height: auto;
-          border-radius: 8px;
-          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-          margin: 1.5em 0;
-        }
+  :global(.richtext-wrapper .${className} h1),
+  :global(.richtext-wrapper .${className} h2),
+  :global(.richtext-wrapper .${className} h3) {
+    margin-top: 1.5em;
+    margin-bottom: 0.5em;
+    font-weight: 600;
+    line-height: 1.25;
+  }
 
-        .${className} figure {
-          margin: 1.5em 0;
-          text-align: center;
-        }
+  :global(.richtext-wrapper .${className} ul){
+  list-style-type: disc !important; /* hiển thị chấm */
+  margin: 1em 0;
+  padding-left: 2em;
+}
+  :global(.richtext-wrapper .${className} ol) {
+    list-style-type: decimal !important; 
+    margin: 1em 0;
+    padding-left: 2em;
+  }
 
-        .${className} figcaption {
-          margin-top: 0.5em;
-          font-size: 0.9em;
-          color: #666;
-          font-style: italic;
-        }
+  :global(.richtext-wrapper .${className} li) {
+    margin-bottom: 0.5em;
+  }
 
-        .${className} blockquote {
-          border-left: 4px solid #e5e7eb;
-          padding-left: 1em;
-          margin: 1.5em 0;
-          font-style: italic;
-          color: #6b7280;
-        }
+  :global(.richtext-wrapper .${className} img) {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin: 1.5em 0;
+  }
 
-        .${className} code {
-          background: #f3f4f6;
-          padding: 0.2em 0.4em;
-          border-radius: 3px;
-          font-family: "Courier New", monospace;
-          font-size: 0.9em;
-        }
+  :global(.richtext-wrapper .${className} figure) {
+    margin: 1.5em 0;
+    text-align: center;
+  }
 
-        .${className} pre {
-          background: #f3f4f6;
-          padding: 1em;
-          border-radius: 8px;
-          overflow-x: auto;
-          margin: 1.5em 0;
-          border: 1px solid #e5e7eb;
-        }
+  :global(.richtext-wrapper .${className} figcaption) {
+    margin-top: 0.5em;
+    font-size: 0.9em;
+    color: #666;
+    font-style: italic;
+  }
 
-        .${className} hr {
-          margin: 2em 0;
-          border: none;
-          border-top: 1px solid #e5e7eb;
-        }
+  :global(.richtext-wrapper .${className} blockquote) {
+    border-left: 4px solid #e5e7eb;
+    padding-left: 1em;
+    margin: 1.5em 0;
+    font-style: italic;
+    color: #6b7280;
+  }
 
-        .${className} ul,
-        .${className} ol {
-          margin: 1em 0;
-          padding-left: 2em;
-        }
+  :global(.richtext-wrapper .${className} code) {
+    background: #f3f4f6;
+    padding: 0.2em 0.4em;
+    border-radius: 3px;
+    font-family: "Courier New", monospace;
+    font-size: 0.9em;
+  }
 
-        .${className} li {
-          margin-bottom: 0.5em;
-        }
+  :global(.richtext-wrapper .${className} pre) {
+    background: #f3f4f6;
+    padding: 1em;
+    border-radius: 8px;
+    overflow-x: auto;
+    margin: 1.5em 0;
+    border: 1px solid #e5e7eb;
+  }
 
-        .${className} h1,
-        .${className} h2,
-        .${className} h3,
-        .${className} h4,
-        .${className} h5,
-        .${className} h6 {
-          margin-top: 1.5em;
-          margin-bottom: 0.5em;
-          font-weight: 600;
-        }
+  :global(.richtext-wrapper .${className} hr) {
+    margin: 2em 0;
+    border: none;
+    border-top: 2px solid #e5e7eb;
+    border-radius: 1px;
+  }
 
-        .${className} p {
-          margin-bottom: 1em;
-        }
+  :global(.richtext-wrapper .${className} .file-card) {
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 1em;
+    margin: 1em 0;
+    background: #f9fafb;
+    transition: all 0.2s ease;
+  }
 
-        /* File styling */
-        .${className} .file-card {
-          border: 1px solid #e5e7eb;
-          border-radius: 8px;
-          padding: 1em;
-          margin: 1em 0;
-          background: #f9fafb;
-          transition: all 0.2s ease;
-        }
+  :global(.richtext-wrapper .${className} .file-card:hover) {
+    background: #f3f4f6;
+    border-color: #d1d5db;
+  }
 
-        .${className} .file-card:hover {
-          background: #f3f4f6;
-          border-color: #d1d5db;
-        }
+  :global(.richtext-wrapper .${className} .file-download-btn) {
+    background: #3b82f6;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.875em;
+    display: inline-block;
+    transition: background-color 0.2s ease;
+  }
 
-        .${className} .file-download-btn {
-          background: #3b82f6;
-          color: white;
-          padding: 8px 16px;
-          border-radius: 6px;
-          text-decoration: none;
-          font-size: 0.875em;
-          display: inline-block;
-          transition: background-color 0.2s ease;
-        }
+  :global(.richtext-wrapper .${className} .file-download-btn:hover) {
+    background: #2563eb;
+    color: white;
+    text-decoration: none;
+  }
 
-        .${className} .file-download-btn:hover {
-          background: #2563eb;
-          color: white;
-          text-decoration: none;
-        }
+  :global(.richtext-wrapper .${className} .file-link) {
+    color: #3b82f6;
+    text-decoration: none;
+  }
 
-        .${className} .file-link {
-          color: #3b82f6;
-          text-decoration: none;
-        }
+  :global(.richtext-wrapper .${className} .file-link:hover) {
+    color: #2563eb;
+    text-decoration: underline;
+  }
 
-        .${className} .file-link:hover {
-          color: #2563eb;
-          text-decoration: underline;
-        }
+  :global(.richtext-wrapper .${className} a) {
+    color: #3b82f6;
+    text-decoration: underline;
+  }
 
-        .${className} a {
-          color: #3b82f6;
-          text-decoration: underline;
-        }
+  :global(.richtext-wrapper .${className} a:hover) {
+    color: #1d4ed8;
+  }
 
-        .${className} a:hover {
-          color: #1d4ed8;
-        }
-      `}</style>
-    </>
+  :global(.richtext-wrapper .${className} strong) {
+    font-weight: 600;
+  }
+
+  :global(.richtext-wrapper .${className} em) {
+    font-style: italic;
+  }
+
+  :global(.richtext-wrapper .${className} u) {
+    text-decoration: underline;
+  }
+
+  :global(.richtext-wrapper .${className} s) {
+    text-decoration: line-through;
+  }
+`}</style>
+
+    </div>
   );
 };
 
@@ -622,11 +699,11 @@ export default function PostDetailPage() {
 
       if (filteredPosts && filteredPosts.length > 0) {
         setPost(filteredPosts[0]);
-        if (filteredPosts.categories?.lenght > 0) {
-          const categorydata = filteredPosts.categories.map(
+        // Fixed the categories processing
+        if (filteredPosts[0].categories?.length > 0) {
+          const categorydata = filteredPosts[0].categories.map(
             (category: { slug: string }) => category.slug,
           );
-
           setCategory(categorydata);
         }
       } else {
