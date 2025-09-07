@@ -15,6 +15,7 @@ import type { Config } from "./payload-types";
 import { getUserTenantIDs } from "./utilities/getUserTenantIDs";
 import { seed } from "./seed";
 import { type Payload } from "payload";
+import type { PayloadHandler } from "payload";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -71,5 +72,28 @@ export default buildConfig({
       },
       userHasAccessToAllTenants: (user) => isSuperAdmin(user),
     }),
+  ],
+  endpoints: [
+    {
+      path: "/public/tenants",
+      method: "get",
+      handler: async (req) => {
+        try {
+          const tenants = await req.payload.find({
+            collection: "tenants",
+            limit: 1000,
+            depth: 1,// lấy dữ liệu quan hệ cấp 1
+          });
+
+          return Response.json(tenants.docs);
+        } catch (error) {
+          console.error("Error fetching tenants:", error);
+          return Response.json(
+            { error: "Failed to fetch tenants" }, 
+            { status: 500 }
+          );
+        }
+      },
+    },
   ],
 });
