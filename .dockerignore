@@ -1,0 +1,6 @@
+.git
+.husky
+.next
+node_modules
+.env.example
+*.db

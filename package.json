@@ -1,4 +1,5 @@
 {
+
   "name": "payload-tenant",
   "version": "1.0.0",
   "description": "An example of a multi tenant application with Payload",
@@ -69,4 +70,5 @@
   "engines": {
     "node": "^18.20.2 || >=20.9.0"
   }
+
 }
