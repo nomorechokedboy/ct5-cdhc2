@@ -236,7 +236,7 @@ export interface Post {
     [k: string]: unknown;
   } | null;
   publishedAt?: string | null;
-  categories?: (number | Category)[] | null;
+  categories: (number | Category)[];
   updatedAt: string;
   createdAt: string;
 }
@@ -246,13 +246,7 @@ export interface Post {
  */
 export interface Media {
   id: number;
-  /**
-   * Alternative text for screen readers
-   */
   alt?: string | null;
-  /**
-   * Optional caption for the media
-   */
   caption?: {
     root: {
       type: string;

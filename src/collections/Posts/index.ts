@@ -146,6 +146,7 @@ export const Posts: CollectionConfig = {
     {
       name: 'categories',
       type: 'relationship',
+      required: true,
       admin: {
         position: 'sidebar',
       },
