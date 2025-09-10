@@ -174,7 +174,7 @@ export const seed: NonNullable<Config["onInit"]> = async (
   const category4 = await payload.create({
     collection: "categories",
     data :{
-      title: "Thể loại D",
+      title: "Bình Rèn",
       name: "Type 4",
       tenants: [tenant2.id],
     },
@@ -192,7 +192,7 @@ export const seed: NonNullable<Config["onInit"]> = async (
   const category6 = await payload.create({
     collection: "categories",
     data :{
-      title: "Thể loại F",
+      title: "Bình rèn",
       name: "Type 6",
       tenants: [tenant3.id],
     },
@@ -875,7 +875,7 @@ export const seed: NonNullable<Config["onInit"]> = async (
         ],
       },
     },
-    categories: [category6], // Thay đổi category phù hợp
+    categories: [category4], // Thay đổi category phù hợp
     publishedAt: new Date().toISOString(),
   },
 });
@@ -1200,7 +1200,7 @@ await payload.create({
         ],
       },
     },
-    categories: [category6], // thay category phù hợp
+    categories: [4], // thay category phù hợp
     publishedAt: new Date().toISOString(),
   },
 });
@@ -1403,7 +1403,7 @@ await payload.create({
         ],
       },
     },
-    categories: [category6], // thay categoryId phù hợp
+    categories: [category4], // thay categoryId phù hợp
     publishedAt: new Date().toISOString(),
   },
 });

@@ -30,6 +30,7 @@ export default buildConfig({
     importMap: {
       baseDir: path.resolve(dirname),
     },
+    
   },
   collections: [Pages, Users, Tenants, Categories, Posts, Media],
 
@@ -96,4 +97,5 @@ export default buildConfig({
       },
     },
   ],
+  
 });
