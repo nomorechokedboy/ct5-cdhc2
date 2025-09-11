@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
+import { ScrollToTop } from '../scroll-to-top'
 
 interface Post {
 	id: string
@@ -868,6 +869,7 @@ export default function PostDetailPage() {
 					</article>
 				</div>
 			</div>
+			<ScrollToTop />
 		</div>
 	)
 }
