@@ -84,6 +84,7 @@ export const ListPosts = () => {
 							(category) => category.slug === slug
 						)
 				)
+				// const dataPostReverse = filteredPosts.reverse()
 				if (filteredPosts) {
 					setPosts(filteredPosts)
 				} else {

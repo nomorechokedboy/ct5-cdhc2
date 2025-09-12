@@ -780,14 +780,14 @@ export default function PostDetailPage() {
 			<div className='min-h-screen flex items-center justify-center'>
 				<div className='text-center'>
 					<h1 className='text-2xl font-semibold mb-2'>
-						Post not found
+						Không tìm thấy bài viết
 					</h1>
 					<p className='text-muted-foreground mb-4'>
-						The post you're looking for doesn't exist.
+						Bài viết không tồn tại
 					</p>
 					<Button onClick={() => router.push('/')}>
 						<ArrowLeft className='h-4 w-4 mr-2' />
-						Back to Posts
+						Quay lại
 					</Button>
 				</div>
 			</div>
@@ -798,19 +798,19 @@ export default function PostDetailPage() {
 		<div className='min-h-screen bg-background '>
 			<div className='max-w-4xl mx-auto px-4 py-8'>
 				{/* Header with back button */}
-				<div className='mb-8 '>
+				<div className='sticky top-4 z-50 mb-8 '>
 					<Button
 						variant='ghost'
 						onClick={() => router.push(`/categories/${slug}`)}
-						className='mb-4 -ml-2'
+						className='bg-background/80 backdrop-blur-sm border border-border shadow-sm hover:bg-accent'
 					>
 						<ArrowLeft className='h-4 w-4 mr-2' />
-						Về danh sách bài viết
+						Quay lại
 					</Button>
 				</div>
 
 				{/* Post header */}
-				<header className='mb-8 ml-25 mr-25'>
+				<header className='mb-8 ml-40 mr20'>
 					{post.categories && post.categories.length > 0 && (
 						<div className='flex items-center gap-2 mb-4 flex-wrap'>
 							{post.categories.map((category, index) => (
@@ -863,7 +863,7 @@ export default function PostDetailPage() {
 				<Separator className='mb-8' />
 
 				{/* Post content */}
-				<div className='ml-30 mr-30'>
+				<div className='ml-40 mr-20'>
 					<article className='mb-8'>
 						<RichTextRenderer content={post.content} />
 					</article>

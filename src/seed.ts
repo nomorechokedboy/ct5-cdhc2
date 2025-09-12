@@ -1,4 +1,6 @@
 import { Config } from "payload";
+// import path from "path";
+
 
 export const seed: NonNullable<Config["onInit"]> = async (
   payload,
@@ -34,6 +36,33 @@ export const seed: NonNullable<Config["onInit"]> = async (
       level: "division",
     },
   });
+  const tenant4 = await payload.create({
+    collection: "tenants",
+    data:{ 
+      name: "Phòng chính trị",
+      slug: "phong-chinh-tri",
+      domain: "phongct.localhost",
+      level: "department",
+    }
+  });
+  const tenant5 = await payload.create({
+    collection: "tenants",
+    data:{ 
+      name: "Phòng khoa học quân sự",
+      slug: "phong-khoa-hoc-quan-su",
+      domain: "phongkhqs.localhost",
+      level: "department",
+    }
+  });
+   const tenant6 = await payload.create({
+    collection: "tenants",
+    data:{ 
+      name: "Ban khảo thí",
+      slug: "phong-khoa-hoc-quan-su",
+      domain: "phongkhqs.localhost",
+      level: "division",
+    }
+  });
 
 
   //Seed users
@@ -45,6 +74,7 @@ export const seed: NonNullable<Config["onInit"]> = async (
       roles: ["super-admin"],
     },
   });
+
 
   await payload.create({
     collection: "users",
@@ -109,6 +139,18 @@ export const seed: NonNullable<Config["onInit"]> = async (
           roles: ["tenant-admin"],
           tenant: tenant3.id,
         },
+        {
+          roles: ["tenant-admin"],
+          tenant: tenant4.id,
+        },
+        {
+          roles: ["tenant-admin"],
+          tenant: tenant5.id,
+        },
+        {
+          roles: ["tenant-admin"],
+          tenant: tenant6.id,
+        },
       ],
       username: "multi-admin",
     },
@@ -147,7 +189,7 @@ export const seed: NonNullable<Config["onInit"]> = async (
   const category1 = await payload.create({
     collection: "categories",
     data :{
-      title: "Thể loại A",
+      title: "Các loại đầu sổ ",
       name: "Type 1",
       tenants: [tenant1.id],
     },
@@ -156,16 +198,16 @@ export const seed: NonNullable<Config["onInit"]> = async (
   const category2 = await payload.create({
     collection: "categories",
     data :{
-      title: "Thể loại B",
+      title: "Các loại đầu sổ",
       name: "Type 2",
-      tenants: [tenant1.id],
+      tenants: [tenant4.id],
     },
   });
 
   const category3 = await payload.create({
     collection: "categories",
     data :{
-      title: "Thể loại C",
+      title: "Các loại đầu sổ",
       name: "Type 3",
       tenants: [tenant2.id],
     },
@@ -183,7 +225,7 @@ export const seed: NonNullable<Config["onInit"]> = async (
   const category5 = await payload.create({
     collection: "categories",
     data :{
-      title: "Thể loại E",
+      title: "Các loại đầu sổ",
       name: "Type 5",
       tenants: [tenant3.id],
     },
@@ -197,6 +239,16 @@ export const seed: NonNullable<Config["onInit"]> = async (
       tenants: [tenant3.id],
     },
   });
+
+  // seed media
+//   const file = await payload.create({
+//   collection: "media",
+//   filePath: path.resolve(process.cwd(), "public/media/binhren.docx"),
+//   data: {
+//     alt: "Bình rèn docx",
+//   },
+// });
+
 
   //Seed posts
 
@@ -238,30 +290,1118 @@ export const seed: NonNullable<Config["onInit"]> = async (
       publishedAt: new Date().toISOString(),
     },
   });
+
+
+  await payload.create({
+  collection: "posts",
+  data: {
+    title: "Quy định chung",
+    content: {
+      root: {
+        type: "root",
+        format: "",
+        indent: 0,
+        version: 1,
+        direction: "ltr",
+        children: [
+          {
+            type: "paragraph",
+            version: 1,
+            direction: "ltr",
+            format: "",
+            indent: 0,
+            children: [
+              {
+                type: "text",
+                text:
+                  "Việc xếp loại rèn luyện học kỳ của học sinh, sinh viên được căn cứ theo kết quả rèn luyện từng tháng trong học kỳ, cụ thể như sau:",
+                version: 1,
+                detail: 0,
+                mode: "normal",
+                style: "",
+                format: 0,
+              },
+            ],
+          },
+          {
+            type: "paragraph",
+            version: 1,
+            direction: "ltr",
+            format: "",
+            indent: 0,
+            children: [
+              {
+                type: "text",
+                text: "A. Loại Tốt",
+                version: 1,
+                detail: 0,
+                mode: "normal",
+                style: "bold",
+                format: 1,
+              },
+            ],
+          },
+          {
+            type: "list",
+            listType: "bullet",
+            version : 1,
+            children: [
+              {
+                type: "listitem",
+                value: 0,
+                children: [
+                  {
+                    type: "paragraph",
+                    children: [
+                      {
+                        type: "text",
+                        text: "Có từ 4 tháng trở lên trong học kỳ đạt loại Tốt.",
+                        version: 1,
+                        detail: 0,
+                        mode: "normal",
+                        style: "",
+                        format: 0,
+                      },
+                    ],
+                  },
+                ],
+              },
+              {
+                type: "listitem",
+                value: 0,
+                children: [
+                  {
+                    type: "paragraph",
+                    children: [
+                      {
+                        type: "text",
+                        text: "Tháng cuối học kỳ bắt buộc phải đạt loại Tốt.",
+                        version: 1,
+                        detail: 0,
+                        mode: "normal",
+                        style: "",
+                        format: 0,
+                      },
+                    ],
+                  },
+                ],
+              },
+              {
+                type: "listitem",
+                value: 0,
+                children: [
+                  {
+                    type: "paragraph",
+                    children: [
+                      {
+                        type: "text",
+                        text: "Các tháng còn lại đạt loại Khá trở lên.",
+                        version: 1,
+                        detail: 0,
+                        mode: "normal",
+                        style: "",
+                        format: 0,
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            type: "paragraph",
+            direction: "ltr",
+            format: "",
+            indent: 0,
+            version: 1,
+            children: [
+              {
+                type: "text",
+                text: "B. Loại Khá",
+                version: 1,
+                detail: 0,
+                mode: "normal",
+                style: "bold",
+                format: 1,
+              },
+            ],
+          },
+          {
+            type: "list",
+            listType: "bullet",
+            version: 1,
+            children: [
+              {
+                type: "listitem",
+                value: 0,
+                children: [
+                  {
+                    type: "paragraph",
+                    children: [
+                      {
+                        type: "text",
+                        text: "Có từ 4 tháng trở lên trong học kỳ đạt loại Khá trở lên.",
+                        version: 1,
+                        detail: 0,
+                        mode: "normal",
+                        style: "",
+                        format: 0,
+                      },
+                    ],
+                  },
+                ],
+              },
+              {
+                type: "listitem",
+                value: 0,
+                children: [
+                  {
+                    type: "paragraph",
+                    children: [
+                      {
+                        type: "text",
+                        text: "Hai tháng cuối học kỳ phải đạt loại Khá.",
+                        version: 1,
+                        detail: 0,
+                        mode: "normal",
+                        style: "",
+                        format: 0,
+                      },
+                    ],
+                  },
+                ],
+              },
+              {
+                type: "listitem",
+                value: 0,
+                children: [
+                  {
+                    type: "paragraph",
+                    children: [
+                      {
+                        type: "text",
+                        text: "Các tháng còn lại đạt loại Trung bình trở lên.",
+                        version: 1,
+                        detail: 0,
+                        mode: "normal",
+                        style: "",
+                        format: 0,
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            type: "paragraph",
+            direction: "ltr",
+            format: "",
+            indent: 0,
+            version: 1,
+            children: [
+              {
+                type: "text",
+                text: "C. Loại Trung bình Khá",
+                version: 1,
+                detail: 0,
+                mode: "normal",
+                style: "bold",
+                format: 1,
+              },
+            ],
+          },
+          {
+            type: "list",
+            listType: "bullet",
+            version: 1,
+            children: [
+              {
+                type: "listitem",
+                value: 0,
+                children: [
+                  {
+                    type: "paragraph",
+                    children: [
+                      {
+                        type: "text",
+                        text:
+                          "Có từ 3 tháng trở lên trong học kỳ đạt loại Trung bình Khá trở lên.",
+                        version: 1,
+                        detail: 0,
+                        mode: "normal",
+                        style: "",
+                        format: 0,
+                      },
+                    ],
+                  },
+                ],
+              },
+              {
+                type: "listitem",
+                value: 0,
+                children: [
+                  {
+                    type: "paragraph",
+                    children: [
+                      {
+                        type: "text",
+                        text:
+                          "Tháng cuối học kỳ phải đạt loại Trung bình Khá.",
+                        version: 1,
+                        detail: 0,
+                        mode: "normal",
+                        style: "",
+                        format: 0,
+                      },
+                    ],
+                  },
+                ],
+              },
+              {
+                type: "listitem",
+                value: 0,
+                children: [
+                  {
+                    type: "paragraph",
+                    children: [
+                      {
+                        type: "text",
+                        text: "Các tháng còn lại đạt loại Trung bình.",
+                        version: 1,
+                        detail: 0,
+                        mode: "normal",
+                        style: "",
+                        format: 0,
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            type: "paragraph",
+            direction: "ltr",
+            format: "",
+            indent: 0,
+            version: 1,
+            children: [
+              {
+                type: "text",
+                text: "D. Loại Trung bình",
+                version: 1,
+                detail: 0,
+                mode: "normal",
+                style: "bold",
+                format: 1,
+              },
+            ],
+          },
+          {
+            type: "list",
+            listType: "bullet",
+            version: 1,
+            children: [
+              {
+                type: "listitem",
+                value: 0,
+                children: [
+                  {
+                    type: "paragraph",
+                    children: [
+                      {
+                        type: "text",
+                        text:
+                          "Có từ 4 tháng trở lên trong học kỳ đạt loại Trung bình trở lên.",
+                        version: 1,
+                        detail: 0,
+                        mode: "normal",
+                        style: "",
+                        format: 0,
+                      },
+                    ],
+                  },
+                ],
+              },
+              {
+                type: "listitem",
+                value: 0,
+                children: [
+                  {
+                    type: "paragraph",
+                    children: [
+                      {
+                        type: "text",
+                        text:
+                          "Hai tháng cuối học kỳ phải đạt loại Trung bình.",
+                        version: 1,
+                        detail: 0,
+                        mode: "normal",
+                        style: "",
+                        format: 0,
+                      },
+                    ],
+                  },
+                ],
+              },
+              {
+                type: "listitem",
+                value: 0,
+                children: [
+                  {
+                    type: "paragraph",
+                    children: [
+                      {
+                        type: "text",
+                        text:
+                          "Không vi phạm khuyết điểm đến mức bị xử lý kỷ luật với hình thức cảnh cáo trở lên.",
+                        version: 1,
+                        detail: 0,
+                        mode: "normal",
+                        style: "",
+                        format: 0,
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            type: "paragraph",
+            direction: "ltr",
+            format: "",
+            indent: 0,
+            version: 1,
+            children: [
+              {
+                type: "text",
+                text: "E. Loại Yếu",
+                version: 1,
+                detail: 0,
+                mode: "normal",
+                style: "bold",
+                format: 1,
+              },
+            ],
+          },
+          {
+            type: "list",
+            listType: "bullet",
+            version:1,
+            children: [
+              {
+                type: "listitem",
+                value: 0,
+                children: [
+                  {
+                    type: "paragraph",
+                    children: [
+                      {
+                        type: "text",
+                        text: "Các tháng trong học kỳ chủ yếu đạt loại Trung bình.",
+                        version: 1,
+                        detail: 0,
+                        mode: "normal",
+                        style: "",
+                        format: 0,
+                      },
+                    ],
+                  },
+                ],
+              },
+              {
+                type: "listitem",
+                value: 0,
+                children: [
+                  {
+                    type: "paragraph",
+                    children: [
+                      {
+                        type: "text",
+                        text: "Có 1 tháng bị xếp loại rèn luyện Kém.",
+                        version: 1,
+                        detail: 0,
+                        mode: "normal",
+                        style: "",
+                        format: 0,
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            type: "paragraph",
+            direction: "ltr",
+            format: "",
+            indent: 0,
+            version: 1,
+            children: [
+              {
+                type: "text",
+                text: "F. Loại Kém",
+                version: 1,
+                detail: 0,
+                mode: "normal",
+                style: "bold",
+                format: 1,
+              },
+            ],
+          },
+          {
+            type: "list",
+            listType: "bullet",
+            version: 1,
+            children: [
+              {
+                type: "listitem",
+                value: 0,
+                children: [
+                  {
+                    type: "paragraph",
+                    children: [
+                      {
+                        type: "text",
+                        text: "Các tháng trong học kỳ chủ yếu đạt loại Trung bình.",
+                        version: 1,
+                        detail: 0,
+                        mode: "normal",
+                        style: "",
+                        format: 0,
+                      },
+                    ],
+                  },
+                ],
+              },
+              {
+                type: "listitem",
+                value: 0,
+                children: [
+                  {
+                    type: "paragraph",
+                    children: [
+                      {
+                        type: "text",
+                        text: "Có 1 tháng xếp loại rèn luyện Kém.",
+                        version: 1,
+                        detail: 0,
+                        mode: "normal",
+                        style: "",
+                        format: 0,
+                      },
+                    ],
+                  },
+                ],
+              },
+              {
+                type: "listitem",
+                value: 0,
+                children: [
+                  {
+                    type: "paragraph",
+                    children: [
+                      {
+                        type: "text",
+                        text:
+                          "Có vi phạm kỷ luật, tuy chưa đến mức bị buộc thôi học.",
+                        version: 1,
+                        detail: 0,
+                        mode: "normal",
+                        style: "",
+                        format: 0,
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+    },
+    categories: [category4], // bạn thay bằng ID hoặc biến danh mục phù hợp
+    publishedAt: new Date().toISOString(),
+  },
+});
+
   
-    await payload.create({
+  await payload.create({
+  collection: "posts",
+  data: {
+    title: "Bình rèn tuần",
+    content: {
+      root: {
+        type: "root",
+        format: "",
+        indent: 0,
+        version: 1,
+        direction: "ltr",
+        children: [
+          {
+            type: "paragraph",
+            version: 1,
+            direction: "ltr",
+            format: "",
+            indent: 0,
+            children: [
+              {
+                type: "text",
+                text: "(File đính kèm)",
+                version: 1,
+                detail: 0,
+                mode: "normal",
+                style: "",
+                format: 0
+              }
+            ]
+          }
+        ]
+      }
+    },
+    categories: [category4], 
+    publishedAt: new Date().toISOString()
+  }
+});
+
+await payload.create({
+  collection: "posts",
+  data: {
+    title: "Bình rèn tháng",
+    excerpt: "Các nội dung và biểu mẫu phục vụ công tác bình rèn luyện hàng tháng.",
+    content: {
+      root: {
+        type: "root",
+        format: "",
+        indent: 0,
+        version: 1,
+        direction: "ltr",
+        children: [
+          {
+            type: "paragraph",
+            version: 1,
+            indent: 0,
+            direction: "ltr",
+            format: "",
+            children: [
+              {
+                type: "text",
+                text: "1. Phiếu tự chấm điểm",
+                version: 1,
+                detail: 0,
+                mode: "normal",
+                style: "bold",
+                format: 1
+              }
+            ]
+          },
+          {
+            type: "paragraph",
+            version: 1,
+            indent: 0,
+            direction: "ltr",
+            format: "",
+            children: [
+              {
+                type: "text",
+                text: "• Học viên thực hiện tự đánh giá kết quả rèn luyện của bản thân trong tuần theo mẫu phiếu quy định.",
+                version: 1,
+                detail: 0,
+                mode: "normal",
+                style: "",
+                format: 0
+              }
+            ]
+          },
+          {
+            type: "paragraph",
+            version: 1,
+            indent: 0,
+            direction: "ltr",
+            format: "",
+            children: [
+              {
+                type: "text",
+                text: "• (Kèm theo file: Phiếu tự chấm điểm)",
+                version: 1,
+                detail: 0,
+                mode: "normal",
+                style: "italic",
+                format: 2
+              }
+            ]
+          },
+
+          {
+            type: "paragraph",
+            version: 1,
+            indent: 0,
+            direction: "ltr",
+            format: "",
+            children: [
+              {
+                type: "text",
+                text: "2. Sinh hoạt tiểu đội",
+                version: 1,
+                detail: 0,
+                mode: "normal",
+                style: "bold",
+                format: 1
+              }
+            ]
+          },
+          {
+            type: "paragraph",
+            version: 1,
+            indent: 0,
+            direction: "ltr",
+            format: "",
+            children: [
+              {
+                type: "text",
+                text: "• Các thành viên trong tiểu đội cùng tham gia sinh hoạt, góp ý và đánh giá lẫn nhau dựa trên các tiêu chí cụ thể.",
+                version: 1,
+                detail: 0,
+                mode: "normal",
+                style: "",
+                format: 0
+              }
+            ]
+          },
+          {
+            type: "paragraph",
+            version: 1,
+            indent: 0,
+            direction: "ltr",
+            format: "",
+            children: [
+              {
+                type: "text",
+                text: "• Nội dung sinh hoạt được ghi nhận đầy đủ.",
+                version: 1,
+                detail: 0,
+                mode: "normal",
+                style: "",
+                format: 0
+              }
+            ]
+          },
+          {
+            type: "paragraph",
+            version: 1,
+            indent: 0,
+            direction: "ltr",
+            format: "",
+            children: [
+              {
+                type: "text",
+                text: "• (Kèm theo file: Biên bản sinh hoạt tiểu đội)",
+                version: 1,
+                detail: 0,
+                mode: "normal",
+                style: "italic",
+                format: 2
+              }
+            ]
+          },
+
+          {
+            type: "paragraph",
+            version: 1,
+            indent: 0,
+            direction: "ltr",
+            format: "",
+            children: [
+              {
+                type: "text",
+                text: "3. Biên bản sinh hoạt lớp",
+                version: 1,
+                detail: 0,
+                mode: "normal",
+                style: "bold",
+                format: 1
+              }
+            ]
+          },
+          {
+            type: "paragraph",
+            version: 1,
+            indent: 0,
+            direction: "ltr",
+            format: "",
+            children: [
+              {
+                type: "text",
+                text: "• Lớp trưởng chủ trì sinh hoạt lớp, tổng hợp ý kiến từ các tiểu đội.",
+                version: 1,
+                detail: 0,
+                mode: "normal",
+                style: "",
+                format: 0
+              }
+            ]
+          },
+          {
+            type: "paragraph",
+            version: 1,
+            indent: 0,
+            direction: "ltr",
+            format: "",
+            children: [
+              {
+                type: "text",
+                text: "• Đánh giá chung tình hình rèn luyện của tập thể và từng cá nhân.",
+                version: 1,
+                detail: 0,
+                mode: "normal",
+                style: "",
+                format: 0
+              }
+            ]
+          },
+          {
+            type: "paragraph",
+            version: 1,
+            indent: 0,
+            direction: "ltr",
+            format: "",
+            children: [
+              {
+                type: "text",
+                text: "• (Kèm theo file: Biên bản sinh hoạt lớp)",
+                version: 1,
+                detail: 0,
+                mode: "normal",
+                style: "italic",
+                format: 2
+              }
+            ]
+          },
+
+          {
+            type: "paragraph",
+            version: 1,
+            indent: 0,
+            direction: "ltr",
+            format: "",
+            children: [
+              {
+                type: "text",
+                text: "4. Biên bản sinh hoạt đại đội",
+                version: 1,
+                detail: 0,
+                mode: "normal",
+                style: "bold",
+                format: 1
+              }
+            ]
+          },
+          {
+            type: "paragraph",
+            version: 1,
+            indent: 0,
+            direction: "ltr",
+            format: "",
+            children: [
+              {
+                type: "text",
+                text: "• Cấp quản lý đại đội tổ chức sinh hoạt, tổng hợp kết quả bình xét từ các lớp.",
+                version: 1,
+                detail: 0,
+                mode: "normal",
+                style: "",
+                format: 0
+              }
+            ]
+          },
+          {
+            type: "paragraph",
+            version: 1,
+            indent: 0,
+            direction: "ltr",
+            format: "",
+            children: [
+              {
+                type: "text",
+                text: "• Góp ý và điều chỉnh điểm rèn luyện nếu cần thiết.",
+                version: 1,
+                detail: 0,
+                mode: "normal",
+                style: "",
+                format: 0
+              }
+            ]
+          },
+          {
+            type: "paragraph",
+            version: 1,
+            indent: 0,
+            direction: "ltr",
+            format: "",
+            children: [
+              {
+                type: "text",
+                text: "• (Kèm theo file: Biên bản sinh hoạt đại đội)",
+                version: 1,
+                detail: 0,
+                mode: "normal",
+                style: "italic",
+                format: 2
+              }
+            ]
+          },
+
+          {
+            type: "paragraph",
+            version: 1,
+            indent: 0,
+            direction: "ltr",
+            format: "",
+            children: [
+              {
+                type: "text",
+                text: "5. Biên bản sinh hoạt chi bộ",
+                version: 1,
+                detail: 0,
+                mode: "normal",
+                style: "bold",
+                format: 1
+              }
+            ]
+          },
+          {
+            type: "paragraph",
+            version: 1,
+            indent: 0,
+            direction: "ltr",
+            format: "",
+            children: [
+              {
+                type: "text",
+                text: "• Với các học viên là Đảng viên, việc sinh hoạt chi bộ là bắt buộc.",
+                version: 1,
+                detail: 0,
+                mode: "normal",
+                style: "",
+                format: 0
+              }
+            ]
+          },
+          {
+            type: "paragraph",
+            version: 1,
+            indent: 0,
+            direction: "ltr",
+            format: "",
+            children: [
+              {
+                type: "text",
+                text: "• Chi bộ tiến hành đánh giá rèn luyện của từng đảng viên học viên trong tuần.",
+                version: 1,
+                detail: 0,
+                mode: "normal",
+                style: "",
+                format: 0
+              }
+            ]
+          },
+          {
+            type: "paragraph",
+            version: 1,
+            indent: 0,
+            direction: "ltr",
+            format: "",
+            children: [
+              {
+                type: "text",
+                text: "• (Kèm theo file: Biên bản sinh hoạt chi bộ)",
+                version: 1,
+                detail: 0,
+                mode: "normal",
+                style: "italic",
+                format: 2
+              }
+            ]
+          },
+
+          {
+            type: "paragraph",
+            version: 1,
+            indent: 0,
+            direction: "ltr",
+            format: "",
+            children: [
+              {
+                type: "text",
+                text: "6. Tờ trình",
+                version: 1,
+                detail: 0,
+                mode: "normal",
+                style: "bold",
+                format: 1
+              }
+            ]
+          },
+          {
+            type: "paragraph",
+            version: 1,
+            indent: 0,
+            direction: "ltr",
+            format: "",
+            children: [
+              {
+                type: "text",
+                text: "• Sau khi hoàn tất các bước trên, đại diện các cấp lập tờ trình báo cáo kết quả bình rèn tuần gửi về đơn vị quản lý.",
+                version: 1,
+                detail: 0,
+                mode: "normal",
+                style: "",
+                format: 0
+              }
+            ]
+          },
+          {
+            type: "paragraph",
+            version: 1,
+            indent: 0,
+            direction: "ltr",
+            format: "",
+            children: [
+              {
+                type: "text",
+                text: "• (Kèm theo file: Tờ trình tổng hợp kết quả bình rèn tuần)",
+                version: 1,
+                detail: 0,
+                mode: "normal",
+                style: "italic",
+                format: 2
+              }
+            ]
+          },
+
+          {
+            type: "paragraph",
+            version: 1,
+            indent: 0,
+            direction: "ltr",
+            format: "",
+            children: [
+              {
+                type: "text",
+                text: "7. Tổng hợp điểm hàng tuần",
+                version: 1,
+                detail: 0,
+                mode: "normal",
+                style: "bold",
+                format: 1
+              }
+            ]
+          },
+          {
+            type: "paragraph",
+            version: 1,
+            indent: 0,
+            direction: "ltr",
+            format: "",
+            children: [
+              {
+                type: "text",
+                text: "• Dựa trên phiếu tự chấm điểm, ý kiến sinh hoạt và các biên bản, ban cán sự lớp phối hợp với quản lý đại đội tổng hợp điểm rèn luyện của từng học viên trong tuần.",
+                version: 1,
+                detail: 0,
+                mode: "normal",
+                style: "",
+                format: 0
+              }
+            ]
+          },
+          {
+            type: "paragraph",
+            version: 1,
+            indent: 0,
+            direction: "ltr",
+            format: "",
+            children: [
+              {
+                type: "text",
+                text: "• Bảng tổng hợp được lưu trữ và dùng làm căn cứ để đánh giá rèn luyện theo tháng và học kỳ.",
+                version: 1,
+                detail: 0,
+                mode: "normal",
+                style: "",
+                format: 0
+              }
+            ]
+          },
+          {
+            type: "paragraph",
+            version: 1,
+            indent: 0,
+            direction: "ltr",
+            format: "",
+            children: [
+              {
+                type: "text",
+                text: "• (Kèm theo file: Bảng tổng hợp điểm rèn luyện hàng tuần)",
+                version: 1,
+                detail: 0,
+                mode: "normal",
+                style: "italic",
+                format: 2
+              }
+            ]
+          }
+        ]
+      }
+    },
+    categories: [category4], 
+    publishedAt: new Date().toISOString()
+  }
+});
+
+
+  await payload.create({
     collection: "posts",
     data: {
-      title: "Bài viết 2",
-      excerpt:"Nhà trường quân sự đẩy mạnh cải cách, đơn giản hóa thủ tục hành chính nhằm nâng cao hiệu quả quản lý, phục vụ tốt hơn cho cán bộ, giảng viên và học viên.",
+      title: "Bình rèn học kỳ",
       content: {
         root: {
           type: "root",
-          format: "",
-          indent: 0,
           version: 1,
+          indent: 0,
           direction: "ltr",
+          format: "",
           children: [
             {
               type: "paragraph",
               version: 1,
+              indent: 0,
               direction: "ltr",
               format: "",
-              indent: 0,
               children: [
                 {
                   type: "text",
-                  text: "Nhà trường quân sự đẩy mạnh cải cách, đơn giản hóa thủ tục hành chính nhằm nâng cao hiệu quả quản lý, phục vụ tốt hơn cho cán bộ, giảng viên và học viên.",
+                  text: "1. Phiếu tự chấm điểm",
+                  version: 1,
+                  detail: 0,
+                  mode: "normal",
+                  style: "bold",
+                  format: 1,
+                },
+              ],
+            },
+            {
+              type: "paragraph",
+              version: 1,
+              indent: 0,
+              direction: "ltr",
+              format: "",
+              children: [
+                {
+                  type: "text",
+                  text: "• Học viên tự đánh giá toàn bộ quá trình rèn luyện trong học kỳ dựa trên các tiêu chí quy định.",
                   version: 1,
                   detail: 0,
                   mode: "normal",
@@ -270,37 +1410,16 @@ export const seed: NonNullable<Config["onInit"]> = async (
                 },
               ],
             },
-          ],
-        },
-      },
-      categories: [category2], 
-      publishedAt: new Date().toISOString(),
-    },
-  });
-
-    await payload.create({
-    collection: "posts",
-    data: {
-      title: "Bài viết 3",
-      excerpt:"Nhà trường quân sự đẩy mạnh cải cách, đơn giản hóa thủ tục hành chính nhằm nâng cao hiệu quả quản lý, phục vụ tốt hơn cho cán bộ, giảng viên và học viên.",
-      content: {
-        root: {
-          type: "root",
-          format: "",
-          indent: 0,
-          version: 1,
-          direction: "ltr",
-          children: [
             {
               type: "paragraph",
               version: 1,
+              indent: 0,
               direction: "ltr",
               format: "",
-              indent: 0,
               children: [
                 {
                   type: "text",
-                  text: "Nhà trường quân sự đẩy mạnh cải cách, đơn giản hóa thủ tục hành chính nhằm nâng cao hiệu quả quản lý, phục vụ tốt hơn cho cán bộ, giảng viên và học viên.",
+                  text: "• Phiếu tự chấm điểm là căn cứ đầu tiên để các cấp xét duyệt, đánh giá.",
                   version: 1,
                   detail: 0,
                   mode: "normal",
@@ -309,37 +1428,424 @@ export const seed: NonNullable<Config["onInit"]> = async (
                 },
               ],
             },
-          ],
-        },
-      },
-      categories: [category3], 
-      publishedAt: new Date().toISOString(),
-    },
-  });
-
-    await payload.create({
-    collection: "posts",
-    data: {
-      title: "Bài viết 4",
-      excerpt:"Nhà trường quân sự đẩy mạnh cải cách, đơn giản hóa thủ tục hành chính nhằm nâng cao hiệu quả quản lý, phục vụ tốt hơn cho cán bộ, giảng viên và học viên.",
-      content: {
-        root: {
-          type: "root",
-          format: "",
-          indent: 0,
-          version: 1,
-          direction: "ltr",
-          children: [
             {
               type: "paragraph",
               version: 1,
+              indent: 0,
               direction: "ltr",
               format: "",
-              indent: 0,
               children: [
                 {
                   type: "text",
-                  text: "Nhà trường quân sự đẩy mạnh cải cách, đơn giản hóa thủ tục hành chính nhằm nâng cao hiệu quả quản lý, phục vụ tốt hơn cho cán bộ, giảng viên và học viên.",
+                  text: "• (Kèm theo file: Phiếu tự chấm điểm học kỳ)",
+                  version: 1,
+                  detail: 0,
+                  mode: "normal",
+                  style: "italic",
+                  format: 2,
+                },
+              ],
+            },
+
+            // 2. Biên bản sinh hoạt lớp
+            {
+              type: "paragraph",
+              version: 1,
+              indent: 0,
+              direction: "ltr",
+              format: "",
+              children: [
+                {
+                  type: "text",
+                  text: "2. Biên bản sinh hoạt lớp",
+                  version: 1,
+                  detail: 0,
+                  mode: "normal",
+                  style: "bold",
+                  format: 1,
+                },
+              ],
+            },
+            {
+              type: "paragraph",
+              version: 1,
+              indent: 0,
+              direction: "ltr",
+              format: "",
+              children: [
+                {
+                  type: "text",
+                  text: "• Lớp tổ chức họp toàn thể học viên để thảo luận, góp ý, đánh giá tinh thần rèn luyện và ý thức tổ chức kỷ luật của từng cá nhân trong học kỳ.",
+                  version: 1,
+                  detail: 0,
+                  mode: "normal",
+                  style: "",
+                  format: 0,
+                },
+              ],
+            },
+            {
+              type: "paragraph",
+              version: 1,
+              indent: 0,
+              direction: "ltr",
+              format: "",
+              children: [
+                {
+                  type: "text",
+                  text: "• Kết quả sinh hoạt được lập thành biên bản.",
+                  version: 1,
+                  detail: 0,
+                  mode: "normal",
+                  style: "",
+                  format: 0,
+                },
+              ],
+            },
+            {
+              type: "paragraph",
+              version: 1,
+              indent: 0,
+              direction: "ltr",
+              format: "",
+              children: [
+                {
+                  type: "text",
+                  text: "• (Kèm theo file: Biên bản sinh hoạt lớp)",
+                  version: 1,
+                  detail: 0,
+                  mode: "normal",
+                  style: "italic",
+                  format: 2,
+                },
+              ],
+            },
+
+            // 3. Biên bản sinh hoạt đại đội
+            {
+              type: "paragraph",
+              version: 1,
+              indent: 0,
+              direction: "ltr",
+              format: "",
+              children: [
+                {
+                  type: "text",
+                  text: "3. Biên bản sinh hoạt đại đội",
+                  version: 1,
+                  detail: 0,
+                  mode: "normal",
+                  style: "bold",
+                  format: 1,
+                },
+              ],
+            },
+            {
+              type: "paragraph",
+              version: 1,
+              indent: 0,
+              direction: "ltr",
+              format: "",
+              children: [
+                {
+                  type: "text",
+                  text: "• Đại đội tổng hợp kết quả bình xét từ các lớp, tổ chức họp đánh giá chung và đề xuất mức xếp loại rèn luyện.",
+                  version: 1,
+                  detail: 0,
+                  mode: "normal",
+                  style: "",
+                  format: 0,
+                },
+              ],
+            },
+            {
+              type: "paragraph",
+              version: 1,
+              indent: 0,
+              direction: "ltr",
+              format: "",
+              children: [
+                {
+                  type: "text",
+                  text: "• Có thể điều chỉnh điểm nếu phát hiện bất thường hoặc có khiếu nại chính đáng.",
+                  version: 1,
+                  detail: 0,
+                  mode: "normal",
+                  style: "",
+                  format: 0,
+                },
+              ],
+            },
+            {
+              type: "paragraph",
+              version: 1,
+              indent: 0,
+              direction: "ltr",
+              format: "",
+              children: [
+                {
+                  type: "text",
+                  text: "• (Kèm theo file: Biên bản sinh hoạt đại đội)",
+                  version: 1,
+                  detail: 0,
+                  mode: "normal",
+                  style: "italic",
+                  format: 2,
+                },
+              ],
+            },
+
+            // 4. Biên bản sinh hoạt chi bộ
+            {
+              type: "paragraph",
+              version: 1,
+              indent: 0,
+              direction: "ltr",
+              format: "",
+              children: [
+                {
+                  type: "text",
+                  text: "4. Biên bản sinh hoạt chi bộ",
+                  version: 1,
+                  detail: 0,
+                  mode: "normal",
+                  style: "bold",
+                  format: 1,
+                },
+              ],
+            },
+            {
+              type: "paragraph",
+              version: 1,
+              indent: 0,
+              direction: "ltr",
+              format: "",
+              children: [
+                {
+                  type: "text",
+                  text: "• Chi bộ Đảng tổ chức sinh hoạt định kỳ và đánh giá mức độ rèn luyện, ý thức tu dưỡng, phẩm chất chính trị của đảng viên là học viên trong học kỳ.",
+                  version: 1,
+                  detail: 0,
+                  mode: "normal",
+                  style: "",
+                  format: 0,
+                },
+              ],
+            },
+            {
+              type: "paragraph",
+              version: 1,
+              indent: 0,
+              direction: "ltr",
+              format: "",
+              children: [
+                {
+                  type: "text",
+                  text: "• Kết quả sinh hoạt chi bộ là một trong những căn cứ để đánh giá rèn luyện.",
+                  version: 1,
+                  detail: 0,
+                  mode: "normal",
+                  style: "",
+                  format: 0,
+                },
+              ],
+            },
+            {
+              type: "paragraph",
+              version: 1,
+              indent: 0,
+              direction: "ltr",
+              format: "",
+              children: [
+                {
+                  type: "text",
+                  text: "• (Kèm theo file: Biên bản sinh hoạt chi bộ)",
+                  version: 1,
+                  detail: 0,
+                  mode: "normal",
+                  style: "italic",
+                  format: 2,
+                },
+              ],
+            },
+
+            // 5. Tờ trình
+            {
+              type: "paragraph",
+              version: 1,
+              indent: 0,
+              direction: "ltr",
+              format: "",
+              children: [
+                {
+                  type: "text",
+                  text: "5. Tờ trình",
+                  version: 1,
+                  detail: 0,
+                  mode: "normal",
+                  style: "bold",
+                  format: 1,
+                },
+              ],
+            },
+            {
+              type: "paragraph",
+              version: 1,
+              indent: 0,
+              direction: "ltr",
+              format: "",
+              children: [
+                {
+                  type: "text",
+                  text: "• Sau khi hoàn thành quá trình bình xét ở các cấp, ban cán sự lập tờ trình đề xuất xếp loại rèn luyện gửi về đại đội và đơn vị quản lý.",
+                  version: 1,
+                  detail: 0,
+                  mode: "normal",
+                  style: "",
+                  format: 0,
+                },
+              ],
+            },
+            {
+              type: "paragraph",
+              version: 1,
+              indent: 0,
+              direction: "ltr",
+              format: "",
+              children: [
+                {
+                  type: "text",
+                  text: "• Tờ trình cần ghi rõ quá trình, minh chứng, ý kiến thống nhất của tập thể.",
+                  version: 1,
+                  detail: 0,
+                  mode: "normal",
+                  style: "",
+                  format: 0,
+                },
+              ],
+            },
+            {
+              type: "paragraph",
+              version: 1,
+              indent: 0,
+              direction: "ltr",
+              format: "",
+              children: [
+                {
+                  type: "text",
+                  text: "• (Kèm theo file: Tờ trình đề xuất kết quả bình rèn học kỳ)",
+                  version: 1,
+                  detail: 0,
+                  mode: "normal",
+                  style: "italic",
+                  format: 2,
+                },
+              ],
+            },
+
+            // 6. Tổng hợp điểm hàng tháng
+            {
+              type: "paragraph",
+              version: 1,
+              indent: 0,
+              direction: "ltr",
+              format: "",
+              children: [
+                {
+                  type: "text",
+                  text: "6. Tổng hợp điểm hàng tháng",
+                  version: 1,
+                  detail: 0,
+                  mode: "normal",
+                  style: "bold",
+                  format: 1,
+                },
+              ],
+            },
+            {
+              type: "paragraph",
+              version: 1,
+              indent: 0,
+              direction: "ltr",
+              format: "",
+              children: [
+                {
+                  type: "text",
+                  text: "• Kết quả điểm rèn luyện của từng tháng trong học kỳ được tổng hợp lại để làm cơ sở xét loại rèn luyện cuối kỳ.",
+                  version: 1,
+                  detail: 0,
+                  mode: "normal",
+                  style: "",
+                  format: 0,
+                },
+              ],
+            },
+            {
+              type: "paragraph",
+              version: 1,
+              indent: 0,
+              direction: "ltr",
+              format: "",
+              children: [
+                {
+                  type: "text",
+                  text: "• Việc tổng hợp cần đảm bảo chính xác, đối chiếu với các biên bản sinh hoạt, phiếu tự chấm điểm và thực tế rèn luyện.",
+                  version: 1,
+                  detail: 0,
+                  mode: "normal",
+                  style: "",
+                  format: 0,
+                },
+              ],
+            },
+            {
+              type: "paragraph",
+              version: 1,
+              indent: 0,
+              direction: "ltr",
+              format: "",
+              children: [
+                {
+                  type: "text",
+                  text: "• (Kèm theo file: Bảng tổng hợp điểm rèn luyện hàng tháng)",
+                  version: 1,
+                  detail: 0,
+                  mode: "normal",
+                  style: "italic",
+                  format: 2,
+                },
+              ],
+            },
+
+            // Lưu ý
+            {
+              type: "paragraph",
+              version: 1,
+              indent: 0,
+              direction: "ltr",
+              format: "",
+              children: [
+                {
+                  type: "text",
+                  text: "✅ Lưu ý",
+                  version: 1,
+                  detail: 0,
+                  mode: "normal",
+                  style: "bold",
+                  format: 1,
+                },
+              ],
+            },
+            {
+              type: "paragraph",
+              version: 1,
+              indent: 0,
+              direction: "ltr",
+              format: "",
+              children: [
+                {
+                  type: "text",
+                  text: "Toàn bộ hồ sơ, biên bản và tài liệu liên quan đến quá trình bình rèn học kỳ phải được lưu trữ đầy đủ, có chữ ký xác nhận của các bên liên quan và chịu trách nhiệm trước tập thể.",
                   version: 1,
                   detail: 0,
                   mode: "normal",
@@ -355,30 +1861,492 @@ export const seed: NonNullable<Config["onInit"]> = async (
       publishedAt: new Date().toISOString(),
     },
   });
-  
-    await payload.create({
+
+
+ await payload.create({
     collection: "posts",
     data: {
-      title: "Bài viết 5",
-      excerpt:"Nhà trường quân sự đẩy mạnh cải cách, đơn giản hóa thủ tục hành chính nhằm nâng cao hiệu quả quản lý, phục vụ tốt hơn cho cán bộ, giảng viên và học viên.",
+      title: "Bình rèn năm học",
       content: {
         root: {
           type: "root",
-          format: "",
-          indent: 0,
           version: 1,
+          indent: 0,
           direction: "ltr",
+          format: "",
           children: [
             {
               type: "paragraph",
               version: 1,
+              indent: 0,
               direction: "ltr",
               format: "",
-              indent: 0,
               children: [
                 {
                   type: "text",
-                  text: "Nhà trường quân sự đẩy mạnh cải cách, đơn giản hóa thủ tục hành chính nhằm nâng cao hiệu quả quản lý, phục vụ tốt hơn cho cán bộ, giảng viên và học viên.",
+                  text: "1. Phiếu tự chấm điểm",
+                  version: 1,
+                  detail: 0,
+                  mode: "normal",
+                  style: "bold",
+                  format: 1,
+                },
+              ],
+            },
+            {
+              type: "paragraph",
+              version: 1,
+              indent: 0,
+              direction: "ltr",
+              format: "",
+              children: [
+                {
+                  type: "text",
+                  text: "• Học viên tự đánh giá toàn bộ quá trình rèn luyện trong học kỳ dựa trên các tiêu chí quy định.",
+                  version: 1,
+                  detail: 0,
+                  mode: "normal",
+                  style: "",
+                  format: 0,
+                },
+              ],
+            },
+            {
+              type: "paragraph",
+              version: 1,
+              indent: 0,
+              direction: "ltr",
+              format: "",
+              children: [
+                {
+                  type: "text",
+                  text: "• Phiếu tự chấm điểm là căn cứ đầu tiên để các cấp xét duyệt, đánh giá.",
+                  version: 1,
+                  detail: 0,
+                  mode: "normal",
+                  style: "",
+                  format: 0,
+                },
+              ],
+            },
+            {
+              type: "paragraph",
+              version: 1,
+              indent: 0,
+              direction: "ltr",
+              format: "",
+              children: [
+                {
+                  type: "text",
+                  text: "• (Kèm theo file: Phiếu tự chấm điểm học kỳ)",
+                  version: 1,
+                  detail: 0,
+                  mode: "normal",
+                  style: "italic",
+                  format: 2,
+                },
+              ],
+            },
+
+            // 2. Biên bản sinh hoạt lớp
+            {
+              type: "paragraph",
+              version: 1,
+              indent: 0,
+              direction: "ltr",
+              format: "",
+              children: [
+                {
+                  type: "text",
+                  text: "2. Biên bản sinh hoạt lớp",
+                  version: 1,
+                  detail: 0,
+                  mode: "normal",
+                  style: "bold",
+                  format: 1,
+                },
+              ],
+            },
+            {
+              type: "paragraph",
+              version: 1,
+              indent: 0,
+              direction: "ltr",
+              format: "",
+              children: [
+                {
+                  type: "text",
+                  text: "• Lớp tổ chức họp toàn thể học viên để thảo luận, góp ý, đánh giá tinh thần rèn luyện và ý thức tổ chức kỷ luật của từng cá nhân trong học kỳ.",
+                  version: 1,
+                  detail: 0,
+                  mode: "normal",
+                  style: "",
+                  format: 0,
+                },
+              ],
+            },
+            {
+              type: "paragraph",
+              version: 1,
+              indent: 0,
+              direction: "ltr",
+              format: "",
+              children: [
+                {
+                  type: "text",
+                  text: "• Kết quả sinh hoạt được lập thành biên bản.",
+                  version: 1,
+                  detail: 0,
+                  mode: "normal",
+                  style: "",
+                  format: 0,
+                },
+              ],
+            },
+            {
+              type: "paragraph",
+              version: 1,
+              indent: 0,
+              direction: "ltr",
+              format: "",
+              children: [
+                {
+                  type: "text",
+                  text: "• (Kèm theo file: Biên bản sinh hoạt lớp)",
+                  version: 1,
+                  detail: 0,
+                  mode: "normal",
+                  style: "italic",
+                  format: 2,
+                },
+              ],
+            },
+
+            // 3. Biên bản sinh hoạt đại đội
+            {
+              type: "paragraph",
+              version: 1,
+              indent: 0,
+              direction: "ltr",
+              format: "",
+              children: [
+                {
+                  type: "text",
+                  text: "3. Biên bản sinh hoạt đại đội",
+                  version: 1,
+                  detail: 0,
+                  mode: "normal",
+                  style: "bold",
+                  format: 1,
+                },
+              ],
+            },
+            {
+              type: "paragraph",
+              version: 1,
+              indent: 0,
+              direction: "ltr",
+              format: "",
+              children: [
+                {
+                  type: "text",
+                  text: "• Đại đội tổng hợp kết quả bình xét từ các lớp, tổ chức họp đánh giá chung và đề xuất mức xếp loại rèn luyện.",
+                  version: 1,
+                  detail: 0,
+                  mode: "normal",
+                  style: "",
+                  format: 0,
+                },
+              ],
+            },
+            {
+              type: "paragraph",
+              version: 1,
+              indent: 0,
+              direction: "ltr",
+              format: "",
+              children: [
+                {
+                  type: "text",
+                  text: "• Có thể điều chỉnh điểm nếu phát hiện bất thường hoặc có khiếu nại chính đáng.",
+                  version: 1,
+                  detail: 0,
+                  mode: "normal",
+                  style: "",
+                  format: 0,
+                },
+              ],
+            },
+            {
+              type: "paragraph",
+              version: 1,
+              indent: 0,
+              direction: "ltr",
+              format: "",
+              children: [
+                {
+                  type: "text",
+                  text: "• (Kèm theo file: Biên bản sinh hoạt đại đội)",
+                  version: 1,
+                  detail: 0,
+                  mode: "normal",
+                  style: "italic",
+                  format: 2,
+                },
+              ],
+            },
+
+            // 4. Biên bản sinh hoạt chi bộ
+            {
+              type: "paragraph",
+              version: 1,
+              indent: 0,
+              direction: "ltr",
+              format: "",
+              children: [
+                {
+                  type: "text",
+                  text: "4. Biên bản sinh hoạt chi bộ",
+                  version: 1,
+                  detail: 0,
+                  mode: "normal",
+                  style: "bold",
+                  format: 1,
+                },
+              ],
+            },
+            {
+              type: "paragraph",
+              version: 1,
+              indent: 0,
+              direction: "ltr",
+              format: "",
+              children: [
+                {
+                  type: "text",
+                  text: "• Chi bộ Đảng tổ chức sinh hoạt định kỳ và đánh giá mức độ rèn luyện, ý thức tu dưỡng, phẩm chất chính trị của đảng viên là học viên trong học kỳ.",
+                  version: 1,
+                  detail: 0,
+                  mode: "normal",
+                  style: "",
+                  format: 0,
+                },
+              ],
+            },
+            {
+              type: "paragraph",
+              version: 1,
+              indent: 0,
+              direction: "ltr",
+              format: "",
+              children: [
+                {
+                  type: "text",
+                  text: "• Kết quả sinh hoạt chi bộ là một trong những căn cứ để đánh giá rèn luyện.",
+                  version: 1,
+                  detail: 0,
+                  mode: "normal",
+                  style: "",
+                  format: 0,
+                },
+              ],
+            },
+            {
+              type: "paragraph",
+              version: 1,
+              indent: 0,
+              direction: "ltr",
+              format: "",
+              children: [
+                {
+                  type: "text",
+                  text: "• (Kèm theo file: Biên bản sinh hoạt chi bộ)",
+                  version: 1,
+                  detail: 0,
+                  mode: "normal",
+                  style: "italic",
+                  format: 2,
+                },
+              ],
+            },
+
+            // 5. Tờ trình
+            {
+              type: "paragraph",
+              version: 1,
+              indent: 0,
+              direction: "ltr",
+              format: "",
+              children: [
+                {
+                  type: "text",
+                  text: "5. Tờ trình",
+                  version: 1,
+                  detail: 0,
+                  mode: "normal",
+                  style: "bold",
+                  format: 1,
+                },
+              ],
+            },
+            {
+              type: "paragraph",
+              version: 1,
+              indent: 0,
+              direction: "ltr",
+              format: "",
+              children: [
+                {
+                  type: "text",
+                  text: "• Sau khi hoàn thành quá trình bình xét ở các cấp, ban cán sự lập tờ trình đề xuất xếp loại rèn luyện gửi về đại đội và đơn vị quản lý.",
+                  version: 1,
+                  detail: 0,
+                  mode: "normal",
+                  style: "",
+                  format: 0,
+                },
+              ],
+            },
+            {
+              type: "paragraph",
+              version: 1,
+              indent: 0,
+              direction: "ltr",
+              format: "",
+              children: [
+                {
+                  type: "text",
+                  text: "• Tờ trình cần ghi rõ quá trình, minh chứng, ý kiến thống nhất của tập thể.",
+                  version: 1,
+                  detail: 0,
+                  mode: "normal",
+                  style: "",
+                  format: 0,
+                },
+              ],
+            },
+            {
+              type: "paragraph",
+              version: 1,
+              indent: 0,
+              direction: "ltr",
+              format: "",
+              children: [
+                {
+                  type: "text",
+                  text: "• (Kèm theo file: Tờ trình đề xuất kết quả bình rèn học kỳ)",
+                  version: 1,
+                  detail: 0,
+                  mode: "normal",
+                  style: "italic",
+                  format: 2,
+                },
+              ],
+            },
+
+            // 6. Tổng hợp điểm hàng tháng
+            {
+              type: "paragraph",
+              version: 1,
+              indent: 0,
+              direction: "ltr",
+              format: "",
+              children: [
+                {
+                  type: "text",
+                  text: "6. Tổng hợp điểm hàng tháng",
+                  version: 1,
+                  detail: 0,
+                  mode: "normal",
+                  style: "bold",
+                  format: 1,
+                },
+              ],
+            },
+            {
+              type: "paragraph",
+              version: 1,
+              indent: 0,
+              direction: "ltr",
+              format: "",
+              children: [
+                {
+                  type: "text",
+                  text: "• Kết quả điểm rèn luyện của từng tháng trong học kỳ được tổng hợp lại để làm cơ sở xét loại rèn luyện cuối kỳ.",
+                  version: 1,
+                  detail: 0,
+                  mode: "normal",
+                  style: "",
+                  format: 0,
+                },
+              ],
+            },
+            {
+              type: "paragraph",
+              version: 1,
+              indent: 0,
+              direction: "ltr",
+              format: "",
+              children: [
+                {
+                  type: "text",
+                  text: "• Việc tổng hợp cần đảm bảo chính xác, đối chiếu với các biên bản sinh hoạt, phiếu tự chấm điểm và thực tế rèn luyện.",
+                  version: 1,
+                  detail: 0,
+                  mode: "normal",
+                  style: "",
+                  format: 0,
+                },
+              ],
+            },
+            {
+              type: "paragraph",
+              version: 1,
+              indent: 0,
+              direction: "ltr",
+              format: "",
+              children: [
+                {
+                  type: "text",
+                  text: "• (Kèm theo file: Bảng tổng hợp điểm rèn luyện hàng tháng)",
+                  version: 1,
+                  detail: 0,
+                  mode: "normal",
+                  style: "italic",
+                  format: 2,
+                },
+              ],
+            },
+
+            // Lưu ý
+            {
+              type: "paragraph",
+              version: 1,
+              indent: 0,
+              direction: "ltr",
+              format: "",
+              children: [
+                {
+                  type: "text",
+                  text: "✅ Lưu ý",
+                  version: 1,
+                  detail: 0,
+                  mode: "normal",
+                  style: "bold",
+                  format: 1,
+                },
+              ],
+            },
+            {
+              type: "paragraph",
+              version: 1,
+              indent: 0,
+              direction: "ltr",
+              format: "",
+              children: [
+                {
+                  type: "text",
+                  text: "Toàn bộ hồ sơ, biên bản và tài liệu liên quan đến quá trình bình rèn học kỳ phải được lưu trữ đầy đủ, có chữ ký xác nhận của các bên liên quan và chịu trách nhiệm trước tập thể.",
                   version: 1,
                   detail: 0,
                   mode: "normal",
@@ -390,35 +2358,495 @@ export const seed: NonNullable<Config["onInit"]> = async (
           ],
         },
       },
-      categories: [category5], 
+      categories: [category4], 
       publishedAt: new Date().toISOString(),
     },
   });
-  
 
-    await payload.create({
+   await payload.create({
     collection: "posts",
     data: {
-      title: "Bài viết 6",
-      excerpt:"Nhà trường quân sự đẩy mạnh cải cách, đơn giản hóa thủ tục hành chính nhằm nâng cao hiệu quả quản lý, phục vụ tốt hơn cho cán bộ, giảng viên và học viên.",
+      title: "Bình rèn khóa học",
       content: {
         root: {
           type: "root",
-          format: "",
-          indent: 0,
           version: 1,
+          indent: 0,
           direction: "ltr",
+          format: "",
           children: [
             {
               type: "paragraph",
               version: 1,
+              indent: 0,
               direction: "ltr",
               format: "",
-              indent: 0,
               children: [
                 {
                   type: "text",
-                  text: "Nhà trường quân sự đẩy mạnh cải cách, đơn giản hóa thủ tục hành chính nhằm nâng cao hiệu quả quản lý, phục vụ tốt hơn cho cán bộ, giảng viên và học viên.",
+                  text: "1. Phiếu tự chấm điểm",
+                  version: 1,
+                  detail: 0,
+                  mode: "normal",
+                  style: "bold",
+                  format: 1,
+                },
+              ],
+            },
+            {
+              type: "paragraph",
+              version: 1,
+              indent: 0,
+              direction: "ltr",
+              format: "",
+              children: [
+                {
+                  type: "text",
+                  text: "• Học viên tự đánh giá toàn bộ quá trình rèn luyện trong học kỳ dựa trên các tiêu chí quy định.",
+                  version: 1,
+                  detail: 0,
+                  mode: "normal",
+                  style: "",
+                  format: 0,
+                },
+              ],
+            },
+            {
+              type: "paragraph",
+              version: 1,
+              indent: 0,
+              direction: "ltr",
+              format: "",
+              children: [
+                {
+                  type: "text",
+                  text: "• Phiếu tự chấm điểm là căn cứ đầu tiên để các cấp xét duyệt, đánh giá.",
+                  version: 1,
+                  detail: 0,
+                  mode: "normal",
+                  style: "",
+                  format: 0,
+                },
+              ],
+            },
+            {
+              type: "paragraph",
+              version: 1,
+              indent: 0,
+              direction: "ltr",
+              format: "",
+              children: [
+                {
+                  type: "text",
+                  text: "• (Kèm theo file: Phiếu tự chấm điểm học kỳ)",
+                  version: 1,
+                  detail: 0,
+                  mode: "normal",
+                  style: "italic",
+                  format: 2,
+                },
+              ],
+            },
+
+            // 2. Biên bản sinh hoạt lớp
+            {
+              type: "paragraph",
+              version: 1,
+              indent: 0,
+              direction: "ltr",
+              format: "",
+              children: [
+                {
+                  type: "text",
+                  text: "2. Biên bản sinh hoạt lớp",
+                  version: 1,
+                  detail: 0,
+                  mode: "normal",
+                  style: "bold",
+                  format: 1,
+                },
+              ],
+            },
+            {
+              type: "paragraph",
+              version: 1,
+              indent: 0,
+              direction: "ltr",
+              format: "",
+              children: [
+                {
+                  type: "text",
+                  text: "• Lớp tổ chức họp toàn thể học viên để thảo luận, góp ý, đánh giá tinh thần rèn luyện và ý thức tổ chức kỷ luật của từng cá nhân trong học kỳ.",
+                  version: 1,
+                  detail: 0,
+                  mode: "normal",
+                  style: "",
+                  format: 0,
+                },
+              ],
+            },
+            {
+              type: "paragraph",
+              version: 1,
+              indent: 0,
+              direction: "ltr",
+              format: "",
+              children: [
+                {
+                  type: "text",
+                  text: "• Kết quả sinh hoạt được lập thành biên bản.",
+                  version: 1,
+                  detail: 0,
+                  mode: "normal",
+                  style: "",
+                  format: 0,
+                },
+              ],
+            },
+            {
+              type: "paragraph",
+              version: 1,
+              indent: 0,
+              direction: "ltr",
+              format: "",
+              children: [
+                {
+                  type: "text",
+                  text: "• (Kèm theo file: Biên bản sinh hoạt lớp)",
+                  version: 1,
+                  detail: 0,
+                  mode: "normal",
+                  style: "italic",
+                  format: 2,
+                },
+              ],
+            },
+
+            // 3. Biên bản sinh hoạt đại đội
+            {
+              type: "paragraph",
+              version: 1,
+              indent: 0,
+              direction: "ltr",
+              format: "",
+              children: [
+                {
+                  type: "text",
+                  text: "3. Biên bản sinh hoạt đại đội",
+                  version: 1,
+                  detail: 0,
+                  mode: "normal",
+                  style: "bold",
+                  format: 1,
+                },
+              ],
+            },
+            {
+              type: "paragraph",
+              version: 1,
+              indent: 0,
+              direction: "ltr",
+              format: "",
+              children: [
+                {
+                  type: "text",
+                  text: "• Đại đội tổng hợp kết quả bình xét từ các lớp, tổ chức họp đánh giá chung và đề xuất mức xếp loại rèn luyện.",
+                  version: 1,
+                  detail: 0,
+                  mode: "normal",
+                  style: "",
+                  format: 0,
+                },
+              ],
+            },
+            {
+              type: "paragraph",
+              version: 1,
+              indent: 0,
+              direction: "ltr",
+              format: "",
+              children: [
+                {
+                  type: "text",
+                  text: "• Có thể điều chỉnh điểm nếu phát hiện bất thường hoặc có khiếu nại chính đáng.",
+                  version: 1,
+                  detail: 0,
+                  mode: "normal",
+                  style: "",
+                  format: 0,
+                },
+              ],
+            },
+            {
+              type: "paragraph",
+              version: 1,
+              indent: 0,
+              direction: "ltr",
+              format: "",
+              children: [
+                {
+                  type: "text",
+                  text: "• (Kèm theo file: Biên bản sinh hoạt đại đội)",
+                  version: 1,
+                  detail: 0,
+                  mode: "normal",
+                  style: "italic",
+                  format: 2,
+                },
+              ],
+            },
+
+            // 4. Biên bản sinh hoạt chi bộ
+            {
+              type: "paragraph",
+              version: 1,
+              indent: 0,
+              direction: "ltr",
+              format: "",
+              children: [
+                {
+                  type: "text",
+                  text: "4. Biên bản sinh hoạt chi bộ",
+                  version: 1,
+                  detail: 0,
+                  mode: "normal",
+                  style: "bold",
+                  format: 1,
+                },
+              ],
+            },
+            {
+              type: "paragraph",
+              version: 1,
+              indent: 0,
+              direction: "ltr",
+              format: "",
+              children: [
+                {
+                  type: "text",
+                  text: "• Chi bộ Đảng tổ chức sinh hoạt định kỳ và đánh giá mức độ rèn luyện, ý thức tu dưỡng, phẩm chất chính trị của đảng viên là học viên trong học kỳ.",
+                  version: 1,
+                  detail: 0,
+                  mode: "normal",
+                  style: "",
+                  format: 0,
+                },
+              ],
+            },
+            {
+              type: "paragraph",
+              version: 1,
+              indent: 0,
+              direction: "ltr",
+              format: "",
+              children: [
+                {
+                  type: "text",
+                  text: "• Kết quả sinh hoạt chi bộ là một trong những căn cứ để đánh giá rèn luyện.",
+                  version: 1,
+                  detail: 0,
+                  mode: "normal",
+                  style: "",
+                  format: 0,
+                },
+              ],
+            },
+            {
+              type: "paragraph",
+              version: 1,
+              indent: 0,
+              direction: "ltr",
+              format: "",
+              children: [
+                {
+                  type: "text",
+                  text: "• (Kèm theo file: Biên bản sinh hoạt chi bộ)",
+                  version: 1,
+                  detail: 0,
+                  mode: "normal",
+                  style: "italic",
+                  format: 2,
+                },
+              ],
+            },
+
+            // 5. Tờ trình
+            {
+              type: "paragraph",
+              version: 1,
+              indent: 0,
+              direction: "ltr",
+              format: "",
+              children: [
+                {
+                  type: "text",
+                  text: "5. Tờ trình",
+                  version: 1,
+                  detail: 0,
+                  mode: "normal",
+                  style: "bold",
+                  format: 1,
+                },
+              ],
+            },
+            {
+              type: "paragraph",
+              version: 1,
+              indent: 0,
+              direction: "ltr",
+              format: "",
+              children: [
+                {
+                  type: "text",
+                  text: "• Sau khi hoàn thành quá trình bình xét ở các cấp, ban cán sự lập tờ trình đề xuất xếp loại rèn luyện gửi về đại đội và đơn vị quản lý.",
+                  version: 1,
+                  detail: 0,
+                  mode: "normal",
+                  style: "",
+                  format: 0,
+                },
+              ],
+            },
+            {
+              type: "paragraph",
+              version: 1,
+              indent: 0,
+              direction: "ltr",
+              format: "",
+              children: [
+                {
+                  type: "text",
+                  text: "• Tờ trình cần ghi rõ quá trình, minh chứng, ý kiến thống nhất của tập thể.",
+                  version: 1,
+                  detail: 0,
+                  mode: "normal",
+                  style: "",
+                  format: 0,
+                },
+              ],
+            },
+            {
+              type: "paragraph",
+              version: 1,
+              indent: 0,
+              direction: "ltr",
+              format: "",
+              children: [
+                {
+                  type: "text",
+                  text: "• (Kèm theo file: Tờ trình đề xuất kết quả bình rèn học kỳ)",
+                  version: 1,
+                  detail: 0,
+                  mode: "normal",
+                  style: "italic",
+                  format: 2,
+                },
+              ],
+            },
+
+            // 6. Tổng hợp điểm hàng tháng
+            {
+              type: "paragraph",
+              version: 1,
+              indent: 0,
+              direction: "ltr",
+              format: "",
+              children: [
+                {
+                  type: "text",
+                  text: "6. Tổng hợp điểm hàng tháng",
+                  version: 1,
+                  detail: 0,
+                  mode: "normal",
+                  style: "bold",
+                  format: 1,
+                },
+              ],
+            },
+            {
+              type: "paragraph",
+              version: 1,
+              indent: 0,
+              direction: "ltr",
+              format: "",
+              children: [
+                {
+                  type: "text",
+                  text: "• Kết quả điểm rèn luyện của từng tháng trong học kỳ được tổng hợp lại để làm cơ sở xét loại rèn luyện cuối kỳ.",
+                  version: 1,
+                  detail: 0,
+                  mode: "normal",
+                  style: "",
+                  format: 0,
+                },
+              ],
+            },
+            {
+              type: "paragraph",
+              version: 1,
+              indent: 0,
+              direction: "ltr",
+              format: "",
+              children: [
+                {
+                  type: "text",
+                  text: "• Việc tổng hợp cần đảm bảo chính xác, đối chiếu với các biên bản sinh hoạt, phiếu tự chấm điểm và thực tế rèn luyện.",
+                  version: 1,
+                  detail: 0,
+                  mode: "normal",
+                  style: "",
+                  format: 0,
+                },
+              ],
+            },
+            {
+              type: "paragraph",
+              version: 1,
+              indent: 0,
+              direction: "ltr",
+              format: "",
+              children: [
+                {
+                  type: "text",
+                  text: "• (Kèm theo file: Bảng tổng hợp điểm rèn luyện hàng tháng)",
+                  version: 1,
+                  detail: 0,
+                  mode: "normal",
+                  style: "italic",
+                  format: 2,
+                },
+              ],
+            },
+
+            // Lưu ý
+            {
+              type: "paragraph",
+              version: 1,
+              indent: 0,
+              direction: "ltr",
+              format: "",
+              children: [
+                {
+                  type: "text",
+                  text: "✅ Lưu ý",
+                  version: 1,
+                  detail: 0,
+                  mode: "normal",
+                  style: "bold",
+                  format: 1,
+                },
+              ],
+            },
+            {
+              type: "paragraph",
+              version: 1,
+              indent: 0,
+              direction: "ltr",
+              format: "",
+              children: [
+                {
+                  type: "text",
+                  text: "Toàn bộ hồ sơ, biên bản và tài liệu liên quan đến quá trình bình rèn học kỳ phải được lưu trữ đầy đủ, có chữ ký xác nhận của các bên liên quan và chịu trách nhiệm trước tập thể.",
                   version: 1,
                   detail: 0,
                   mode: "normal",
@@ -430,2065 +2858,10 @@ export const seed: NonNullable<Config["onInit"]> = async (
           ],
         },
       },
-      categories: [category6], 
+      categories: [category4], 
       publishedAt: new Date().toISOString(),
     },
   });
 
-  await payload.create({
-  collection: "posts",
-  data: {
-    title: "Hướng dẫn thực hiện Bình rèn tuần trong đơn vị",
-    excerpt: "Trong công tác quản lý, giáo dục và rèn luyện bộ đội, bình rèn tuần là một nội dung quan trọng nhằm giúp mỗi cá nhân tự đánh giá, tự phê bình và lắng nghe nhận xét góp ý từ tập thể.",
-    content: {
-      root: {
-        type: "root",
-        format: "",
-        indent: 0,
-        version: 1,
-        direction: "ltr",
-        children: [
-          // {
-          //   type: "heading",
-          //   version: 1,
-          //   tag: "h2",
-          //   direction: "ltr",
-          //   format: "",
-          //   indent: 0,
-          //   children: [
-          //     {
-          //       type: "text",
-          //       text: "Hướng dẫn thực hiện Bình rèn tuần trong đơn vị",
-          //       version: 1,
-          //       detail: 0,
-          //       mode: "normal",
-          //       style: "",
-          //       format: 1, // bold
-          //     },
-          //   ],
-          // },
-          {
-            type: "paragraph",
-            version: 1,
-            direction: "ltr",
-            format: "",
-            indent: 0,
-            children: [
-              {
-                type: "text",
-                text: "Trong công tác quản lý, giáo dục và rèn luyện bộ đội, bình rèn tuần là một nội dung quan trọng nhằm giúp mỗi cá nhân tự đánh giá, tự phê bình và lắng nghe nhận xét góp ý từ tập thể. Qua đó, cấp trên có cơ sở nắm bắt tình hình, biểu dương, kịp thời chấn chỉnh những tồn tại trong đơn vị.",
-                version: 1,
-                detail: 0,
-                mode: "normal",
-                style: "",
-                format: 1, // bold
-              },
-            ],
-          },
-          {
-            type: "paragraph",
-            version: 1,
-            direction: "ltr",
-            format: "",
-            indent: 0,
-            children: [
-              {
-                type: "text",
-                text: "Để thống nhất cách làm, cán bộ và chiến sĩ thực hiện theo các bước sau:",
-                version: 1,
-                detail: 0,
-                mode: "normal",
-                style: "",
-                format: 1, // bold
-              },
-            ],
-          },
-          {
-            type: "heading",
-            version: 1,
-            tag: "h3",
-            direction: "ltr",
-            format: "",
-            indent: 0,
-            children: [
-              {
-                type: "text",
-                text: "1. In và phát mẫu bình rèn",
-                version: 1,
-                detail: 0,
-                mode: "normal",
-                style: "",
-                format: 1, // bold
-              },
-            ],
-          },
-          {
-            type: "list",
-            version: 1,
-            listType: "bullet",
-            start: 1,
-            tag: "ul",
-            direction: "ltr",
-            format: "",
-            indent: 0,
-            children: [
-              {
-                type: "listitem",
-                version: 1,
-                value: 1,
-                format: "",
-                indent: 0,
-                direction: "ltr",
-                children: [
-                  {
-                    type: "text",
-                    text: "Đại đội in sẵn mẫu phiếu bình rèn tuần (theo biểu mẫu đính kèm).",
-                    version: 1,
-                    detail: 0,
-                    mode: "normal",
-                    style: "",
-                    format: 1, // bold
-                  },
-                ],
-              },
-              {
-                type: "listitem",
-                version: 1,
-                value: 2,
-                format: "",
-                indent: 0,
-                direction: "ltr",
-                children: [
-                  {
-                    type: "text",
-                    text: "Phát về cho từng tiểu đội để tổ chức thực hiện.",
-                    version: 1,
-                    detail: 0,
-                    mode: "normal",
-                    style: "",
-                    format: 1, // bold
-                  },
-                ],
-              },
-            ],
-          },
-          {
-            type: "heading",
-            version: 1,
-            tag: "h3",
-            direction: "ltr",
-            format: "",
-            indent: 0,
-            children: [
-              {
-                type: "text",
-                text: "2. Tổ chức bình rèn tại tiểu đội",
-                version: 1,
-                detail: 0,
-                mode: "normal",
-                style: "",
-                format: 1, // bold
-              },
-            ],
-          },
-          {
-            type: "list",
-            version: 1,
-            listType: "bullet",
-            start: 1,
-            tag: "ul",
-            direction: "ltr",
-            format: "",
-            indent: 0,
-            children: [
-              {
-                type: "listitem",
-                version: 1,
-                value: 1,
-                format: "",
-                indent: 0,
-                direction: "ltr",
-                children: [
-                  {
-                    type: "text",
-                    text: "Từng cá nhân tự viết bản tự nhận xét, tự đánh giá ưu khuyết điểm của mình trong tuần.",
-                    version: 1,
-                    detail: 0,
-                    mode: "normal",
-                    style: "",
-                    format: 1, // bold
-                  },
-                ],
-              },
-              {
-                type: "listitem",
-                version: 1,
-                value: 2,
-                format: "",
-                indent: 0,
-                direction: "ltr",
-                children: [
-                  {
-                    type: "text",
-                    text: "Tập thể tiểu đội nhận xét bổ sung, góp ý cho từng đồng chí.",
-                    version: 1,
-                    detail: 0,
-                    mode: "normal",
-                    style: "",
-                    format: 1, // bold
-                  },
-                ],
-              },
-              {
-                type: "listitem",
-                version: 1,
-                value: 3,
-                format: "",
-                indent: 0,
-                direction: "ltr",
-                children: [
-                  {
-                    type: "text",
-                    text: "Tiểu đội trưởng tổng hợp, ký xác nhận.",
-                    version: 1,
-                    detail: 0,
-                    mode: "normal",
-                    style: "",
-                    format: 1, // bold
-                  },
-                ],
-              },
-            ],
-          },
-          {
-            type: "heading",
-            version: 1,
-            tag: "h3",
-            direction: "ltr",
-            format: "",
-            indent: 0,
-            children: [
-              {
-                type: "text",
-                text: "3. Nộp lại cho Đại đội",
-                version: 1,
-                detail: 0,
-                mode: "normal",
-                style: "",
-                format: 1, // bold
-              },
-            ],
-          },
-          {
-            type: "list",
-            version: 1,
-            listType: "bullet",
-            start: 1,
-            tag: "ul",
-            direction: "ltr",
-            format: "",
-            indent: 0,
-            children: [
-              {
-                type: "listitem",
-                version: 1,
-                value: 1,
-                format: "",
-                indent: 0,
-                direction: "ltr",
-                children: [
-                  {
-                    type: "text",
-                    text: "Các tiểu đội thu toàn bộ phiếu bình rèn.",
-                    version: 1,
-                    detail: 0,
-                    mode: "normal",
-                    style: "",
-                    format: 1, // bold
-                  },
-                ],
-              },
-              {
-                type: "listitem",
-                version: 1,
-                value: 2,
-                format: "",
-                indent: 0,
-                direction: "ltr",
-                children: [
-                  {
-                    type: "text",
-                    text: "Gửi về Đại đội để tổng hợp, xác nhận và lưu hồ sơ.",
-                    version: 1,
-                    detail: 0,
-                    mode: "normal",
-                    style: "",
-                    format: 1, // bold
-                  },
-                ],
-              },
-            ],
-          },
-          {
-            type: "heading",
-            version: 1,
-            tag: "h3",
-            direction: "ltr",
-            format: "",
-            indent: 0,
-            children: [
-              {
-                type: "text",
-                text: "4. Tải mẫu phiếu bình rèn",
-                version: 1,
-                detail: 0,
-                mode: "normal",
-                style: "",
-                format: 1, // bold
-              },
-            ],
-          },
-          {
-            type: "paragraph",
-            version: 1,
-            direction: "ltr",
-            format: "",
-            indent: 0,
-            children: [
-              {
-                type: "text",
-                text: "Để thuận tiện cho quá trình triển khai, đơn vị có thể tải mẫu phiếu bình rèn tuần theo đường dẫn dưới đây:",
-                version: 1,
-                detail: 0,
-                mode: "normal",
-                style: "",
-                format: 1, // bold
-              },
-            ],
-          },
-          {
-            type: "paragraph",
-            version: 1,
-            direction: "ltr",
-            format: "",
-            indent: 0,
-            children: [
-              {
-                type: "text",
-                text: "📎 Tải mẫu phiếu bình rèn tuần (.docx)",
-                version: 1,
-                detail: 0,
-                mode: "normal",
-                style: "",
-                format: 1, // bold
-              },
-            ],
-          },
-          {
-            type: "heading",
-            version: 1,
-            tag: "h3",
-            direction: "ltr",
-            format: "",
-            indent: 0,
-            children: [
-              {
-                type: "text",
-                text: "5. Một số lưu ý",
-                version: 1,
-                detail: 0,
-                mode: "normal",
-                style: "",
-                format: 1, // bold
-              },
-            ],
-          },
-          {
-            type: "list",
-            version: 1,
-            listType: "bullet",
-            start: 1,
-            tag: "ul",
-            direction: "ltr",
-            format: "",
-            indent: 0,
-            children: [
-              {
-                type: "listitem",
-                version: 1,
-                value: 1,
-                format: "",
-                indent: 0,
-                direction: "ltr",
-                children: [
-                  {
-                    type: "text",
-                    text: "Viết ngắn gọn, trung thực, đúng sự thật.",
-                    version: 1,
-                    detail: 0,
-                    mode: "normal",
-                    style: "",
-                    format: 1, // bold
-                  },
-                ],
-              },
-              {
-                type: "listitem",
-                version: 1,
-                value: 2,
-                format: "",
-                indent: 0,
-                direction: "ltr",
-                children: [
-                  {
-                    type: "text",
-                    text: "Nội dung tập trung vào ý thức chấp hành điều lệnh, kỷ luật, tác phong, đoàn kết nội bộ, nhiệm vụ được giao.",
-                    version: 1,
-                    detail: 0,
-                    mode: "normal",
-                    style: "",
-                    format: 1, // bold
-                  },
-                ],
-              },
-              {
-                type: "listitem",
-                version: 1,
-                value: 3,
-                format: "",
-                indent: 0,
-                direction: "ltr",
-                children: [
-                  {
-                    type: "text",
-                    text: "Nộp đúng thời gian quy định để bảo đảm công tác quản lý.",
-                    version: 1,
-                    detail: 0,
-                    mode: "normal",
-                    style: "",
-                    format: 1, // bold
-                  },
-                ],
-              },
-            ],
-          },
-        ],
-      },
-    },
-    categories: [category4], // Thay đổi category phù hợp
-    publishedAt: new Date().toISOString(),
-  },
-});
-
-await payload.create({
-  collection: "posts",
-  data: {
-    title: "Hướng dẫn thực hiện Bình rèn tháng trong đơn vị",
-    excerpt:
-      "Bình rèn tháng là hoạt động quan trọng nhằm đánh giá kết quả rèn luyện, học tập và công tác của cán bộ, chiến sĩ trong đơn vị theo chu kỳ tháng. Đây là cơ sở để cấp ủy, chỉ huy nhận xét, xếp loại và đề ra biện pháp quản lý, giáo dục phù hợp.",
-    content: {
-      root: {
-        type: "root",
-        format: "",
-        indent: 0,
-        version: 1,
-        direction: "ltr",
-        children: [
-          {
-            type: "paragraph",
-            version: 1,
-            direction: "ltr",
-            format: "",
-            indent: 0,
-            children: [
-              {
-                type: "text",
-                text: "Bình rèn tháng là hoạt động quan trọng nhằm đánh giá kết quả rèn luyện, học tập và công tác của cán bộ, chiến sĩ trong đơn vị theo chu kỳ tháng. Đây là cơ sở để cấp ủy, chỉ huy nhận xét, xếp loại và đề ra biện pháp quản lý, giáo dục phù hợp.",
-                version: 1,
-                detail: 0,
-                mode: "normal",
-                style: "",
-                format: 1, // bold
-              },
-            ],
-          },
-          {
-            type: "paragraph",
-            version: 1,
-            direction: "ltr",
-            format: "",
-            indent: 0,
-            children: [
-              {
-                type: "text",
-                text: "Quy trình bình rèn tháng được thực hiện theo các bước sau:",
-                version: 1,
-                detail: 0,
-                mode: "normal",
-                style: "",
-                format: 1, // bold
-              },
-            ],
-          },
-          // 1. In và phát mẫu
-          {
-            type: "heading",
-            version: 1,
-            tag: "h3",
-            direction: "ltr",
-            format: "",
-            indent: 0,
-            children: [
-              {
-                type: "text",
-                text: "1. In và phát mẫu bình rèn tháng",
-                version: 1,
-                detail: 0,
-                mode: "normal",
-                style: "",
-                format: 1, // bold
-              },
-            ],
-          },
-          {
-            type: "list",
-            version: 1,
-            listType: "bullet",
-            start: 1,
-            tag: "ul",
-            direction: "ltr",
-            format: "",
-            indent: 0,
-            children: [
-              {
-                type: "listitem",
-                version: 1,
-                value: 1,
-                format: "",
-                indent: 0,
-                direction: "ltr",
-                children: [
-                  {
-                    type: "text",
-                    text: "Đại đội in sẵn bộ mẫu bình rèn tháng bao gồm:",
-                    version: 1,
-                    detail: 0,
-                    mode: "normal",
-                    style: "",
-                    format: 1, // bold
-                  },
-                ],
-              },
-              {
-                type: "listitem",
-                version: 1,
-                value: 2,
-                format: "",
-                indent: 0,
-                direction: "ltr",
-                children: [
-                  { 
-                    type: "text", 
-                    text: "1. Phiếu đánh giá cá nhân.", 
-                    version: 1,
-                    detail: 0,
-                    mode: "normal",
-                    style: "",
-                    format: 1, // bold
-                  },
-                ],
-              },
-              {
-                type: "listitem",
-                version: 1,
-                value: 3,
-                format: "",
-                indent: 0,
-                direction: "ltr",
-                children: [
-                  { 
-                    type: "text", 
-                    text: "2. Biên bản sinh hoạt tiểu đội.", 
-                    version: 1,
-                    detail: 0,
-                    mode: "normal",
-                    style: "",
-                    format: 1, // bold
-                  },
-                ],
-              },
-              {
-                type: "listitem",
-                version: 1,
-                value: 4,
-                format: "",
-                indent: 0,
-                direction: "ltr",
-                children: [
-                  { 
-                    type: "text", 
-                    text: "3. Biên bản sinh hoạt lớp.", 
-                    version: 1,
-                    detail: 0,
-                    mode: "normal",
-                    style: "",
-                    format: 1, // bold
-                  },
-                ],
-              },
-              {
-                type: "listitem",
-                version: 1,
-                value: 5,
-                format: "",
-                indent: 0,
-                direction: "ltr",
-                children: [
-                  { 
-                    type: "text", 
-                    text: "4. Bảng tổng hợp điểm đánh giá từng cá nhân.", 
-                    version: 1,
-                    detail: 0,
-                    mode: "normal",
-                    style: "",
-                    format: 1, // bold
-                  },
-                ],
-              },
-              {
-                type: "listitem",
-                version: 1,
-                value: 6,
-                format: "",
-                indent: 0,
-                direction: "ltr",
-                children: [
-                  { 
-                    type: "text", 
-                    text: "Phát xuống cho các tiểu đội, lớp để tổ chức thực hiện.", 
-                    version: 1,
-                    detail: 0,
-                    mode: "normal",
-                    style: "",
-                    format: 1, // bold
-                  },
-                ],
-              },
-            ],
-          },
-          // 2. Tổ chức bình rèn tại các cấp cơ sở
-          {
-            type: "heading",
-            version: 1,
-            tag: "h3",
-            direction: "ltr",
-            format: "",
-            indent: 0,
-            children: [
-              {
-                type: "text",
-                text: "2. Tổ chức bình rèn tại các cấp cơ sở",
-                version: 1,
-                detail: 0,
-                mode: "normal",
-                style: "",
-                format: 1, // bold
-              },
-            ],
-          },
-          {
-            type: "list",
-            version: 1,
-            listType: "bullet",
-            start: 1,
-            tag: "ul",
-            direction: "ltr",
-            format: "",
-            indent: 0,
-            children: [
-              {
-                type: "listitem",
-                version: 1,
-                value: 1,
-                format: "",
-                indent: 0,
-                direction: "ltr",
-                children: [
-                  { 
-                    type: "text", 
-                    text: "Cá nhân viết bản tự đánh giá, tự nhận xét.", 
-                    version: 1,
-                    detail: 0,
-                    mode: "normal",
-                    style: "",
-                    format: 1, // bold
-                  },
-                ],
-              },
-              {
-                type: "listitem",
-                version: 1,
-                value: 2,
-                format: "",
-                indent: 0,
-                direction: "ltr",
-                children: [
-                  { 
-                    type: "text", 
-                    text: "Tiểu đội tổ chức họp, thảo luận, nhận xét, ghi vào biên bản sinh hoạt tiểu đội.", 
-                    version: 1,
-                    detail: 0,
-                    mode: "normal",
-                    style: "",
-                    format: 1, // bold
-                  },
-                ],
-              },
-              {
-                type: "listitem",
-                version: 1,
-                value: 3,
-                format: "",
-                indent: 0,
-                direction: "ltr",
-                children: [
-                  { 
-                    type: "text", 
-                    text: "Lớp tổ chức sinh hoạt, tổng hợp nhận xét và đánh giá vào biên bản sinh hoạt lớp.", 
-                    version: 1,
-                    detail: 0,
-                    mode: "normal",
-                    style: "",
-                    format: 1, // bold
-                  },
-                ],
-              },
-              {
-                type: "listitem",
-                version: 1,
-                value: 4,
-                format: "",
-                indent: 0,
-                direction: "ltr",
-                children: [
-                  { 
-                    type: "text", 
-                    text: "Lớp trưởng ký xác nhận, lập bảng tổng hợp điểm đánh giá từng cá nhân trong lớp.", 
-                    version: 1,
-                    detail: 0,
-                    mode: "normal",
-                    style: "",
-                    format: 1, // bold
-                  },
-                ],
-              },
-            ],
-          },
-          // 3. Đại đội xác nhận
-          {
-            type: "heading",
-            version: 1,
-            tag: "h3",
-            direction: "ltr",
-            format: "",
-            indent: 0,
-            children: [
-              {
-                type: "text",
-                text: "3. Đại đội xác nhận và lập tờ trình",
-                version: 1,
-                detail: 0,
-                mode: "normal",
-                style: "",
-                format: 1, // bold
-              },
-            ],
-          },
-          {
-            type: "list",
-            version: 1,
-            listType: "bullet",
-            start: 1,
-            tag: "ul",
-            direction: "ltr",
-            format: "",
-            indent: 0,
-            children: [
-              {
-                type: "listitem",
-                version: 1,
-                value: 1,
-                format: "",
-                indent: 0,
-                direction: "ltr",
-                children: [
-                  { 
-                    type: "text", 
-                    text: "Các lớp nộp đầy đủ hồ sơ về Đại đội (phiếu cá nhân, biên bản tiểu đội, biên bản lớp, bảng điểm).", 
-                    version: 1,
-                    detail: 0,
-                    mode: "normal",
-                    style: "",
-                    format: 1, // bold
-                  },
-                ],
-              },
-              {
-                type: "listitem",
-                version: 1,
-                value: 2,
-                format: "",
-                indent: 0,
-                direction: "ltr",
-                children: [
-                  { 
-                    type: "text", 
-                    text: "Đại đội tổ chức sinh hoạt, lập biên bản sinh hoạt Đại đội.", 
-                    version: 1,
-                    detail: 0,
-                    mode: "normal",
-                    style: "",
-                    format: 1, // bold
-                  },
-                ],
-              },
-              {
-                type: "listitem",
-                version: 1,
-                value: 3,
-                format: "",
-                indent: 0,
-                direction: "ltr",
-                children: [
-                  { 
-                    type: "text", 
-                    text: "Chính trị viên/Đại đội trưởng ký xác nhận và lập tờ trình báo cáo kết quả bình rèn tháng.", 
-                    version: 1,
-                    detail: 0,
-                    mode: "normal",
-                    style: "",
-                    format: 1, // bold
-                  },
-                ],
-              },
-            ],
-          },
-          // 4. Trình Tiểu đoàn
-          {
-            type: "heading",
-            version: 1,
-            tag: "h3",
-            direction: "ltr",
-            format: "",
-            indent: 0,
-            children: [
-              {
-                type: "text",
-                text: "4. Trình Tiểu đoàn",
-                version: 1,
-                detail: 0,
-                mode: "normal",
-                style: "",
-                format: 1, // bold
-              },
-            ],
-          },
-          {
-            type: "list",
-            version: 1,
-            listType: "bullet",
-            start: 1,
-            tag: "ul",
-            direction: "ltr",
-            format: "",
-            indent: 0,
-            children: [
-              {
-                type: "listitem",
-                version: 1,
-                value: 1,
-                format: "",
-                indent: 0,
-                direction: "ltr",
-                children: [
-                  { 
-                    type: "text", 
-                    text: "Đại đội nộp hồ sơ bình rèn tháng kèm theo:", 
-                    version: 1,
-                    detail: 0,
-                    mode: "normal",
-                    style: "",
-                    format: 1, // bold
-                  },
-                ],
-              },
-              {
-                type: "listitem",
-                version: 1,
-                value: 2,
-                format: "",
-                indent: 0,
-                direction: "ltr",
-                children: [
-                  { 
-                    type: "text", 
-                    text: "• Tờ trình.", 
-                    version: 1,
-                    detail: 0,
-                    mode: "normal",
-                    style: "",
-                    format: 1, // bold
-                  },
-                ],
-              },
-              {
-                type: "listitem",
-                version: 1,
-                value: 3,
-                format: "",
-                indent: 0,
-                direction: "ltr",
-                children: [
-                  { 
-                    type: "text", 
-                    text: "• Biên bản sinh hoạt Đại đội.", 
-                    version: 1,
-                    detail: 0,
-                    mode: "normal",
-                    style: "",
-                    format: 1, // bold
-                  },
-                ],
-              },
-              {
-                type: "listitem",
-                version: 1,
-                value: 4,
-                format: "",
-                indent: 0,
-                direction: "ltr",
-                children: [
-                  { 
-                    type: "text", 
-                    text: "• Hồ sơ bình rèn từ các tiểu đội, lớp.", 
-                    version: 1,
-                    detail: 0,
-                    mode: "normal",
-                    style: "",
-                    format: 1, // bold
-                  },
-                ],
-              },
-              {
-                type: "listitem",
-                version: 1,
-                value: 5,
-                format: "",
-                indent: 0,
-                direction: "ltr",
-                children: [
-                  { 
-                    type: "text", 
-                    text: "Báo cáo, trình lên Tiểu đoàn để xem xét, xác nhận và lưu.", 
-                    version: 1,
-                    detail: 0,
-                    mode: "normal",
-                    style: "",
-                    format: 1, // bold
-                  },
-                ],
-              },
-            ],
-          },
-          // 5. Tải mẫu
-          {
-            type: "heading",
-            version: 1,
-            tag: "h3",
-            direction: "ltr",
-            format: "",
-            indent: 0,
-            children: [
-              {
-                type: "text",
-                text: "5. Tải mẫu biểu bình rèn tháng",
-                version: 1,
-                detail: 0,
-                mode: "normal",
-                style: "",
-                format: 1, // bold
-              },
-            ],
-          },
-          {
-            type: "paragraph",
-            version: 1,
-            direction: "ltr",
-            format: "",
-            indent: 0,
-            children: [
-              {
-                type: "text",
-                text: "Để thuận tiện cho quá trình triển khai, đơn vị có thể tải mẫu hồ sơ bình rèn tháng theo đường dẫn dưới đây:",
-                version: 1,
-                detail: 0,
-                mode: "normal",
-                style: "",
-                format: 1, // bold
-              },
-            ],
-          },
-          {
-            type: "paragraph",
-            version: 1,
-            direction: "ltr",
-            format: "",
-            indent: 0,
-            children: [
-              {
-                type: "text",
-                text: "📎 Tải mẫu hồ sơ bình rèn tháng (.docx)",
-                version: 1,
-                detail: 0,
-                mode: "normal",
-                style: "",
-                format: 1, // bold
-              },
-            ],
-          },
-          // 6. Một số lưu ý
-          {
-            type: "heading",
-            version: 1,
-            tag: "h3",
-            direction: "ltr",
-            format: "",
-            indent: 0,
-            children: [
-              {
-                type: "text",
-                text: "6. Một số lưu ý",
-                version: 1,
-                detail: 0,
-                mode: "normal",
-                style: "",
-                format: 1, // bold
-              },
-            ],
-          },
-          {
-            type: "list",
-            version: 1,
-            listType: "bullet",
-            start: 1,
-            tag: "ul",
-            direction: "ltr",
-            format: "",
-            indent: 0,
-            children: [
-              {
-                type: "listitem",
-                version: 1,
-                value: 1,
-                format: "",
-                indent: 0,
-                direction: "ltr",
-                children: [
-                  { 
-                    type: "text", 
-                    text: "Nội dung đánh giá cần cụ thể, trung thực, sát thực tế.", 
-                    version: 1,
-                    detail: 0,
-                    mode: "normal",
-                    style: "",
-                    format: 1, // bold
-                  },
-                ],
-              },
-              {
-                type: "listitem",
-                version: 1,
-                value: 2,
-                format: "",
-                indent: 0,
-                direction: "ltr",
-                children: [
-                  { 
-                    type: "text", 
-                    text: "Biên bản phải đầy đủ chữ ký của tập thể và cán bộ phụ trách.", 
-                    version: 1,
-                    detail: 0,
-                    mode: "normal",
-                    style: "",
-                    format: 1, // bold
-                  },
-                ],
-              },
-              {
-                type: "listitem",
-                version: 1,
-                value: 3,
-                format: "",
-                indent: 0,
-                direction: "ltr",
-                children: [
-                  { 
-                    type: "text", 
-                    text: "Hồ sơ phải được sắp xếp khoa học, nộp đúng thời gian quy định.", 
-                    version: 1,
-                    detail: 0,
-                    mode: "normal",
-                    style: "",
-                    format: 1, // bold
-                  },
-                ],
-              },
-            ],
-          },
-        ],
-      },
-    },
-    categories: [category4], // thay category phù hợp
-    publishedAt: new Date().toISOString(),
-  },
-});
-
-await payload.create({
-  collection: "posts",
-  data: {
-    title: "Hướng dẫn thực hiện Bình rèn học kỳ trong đơn vị",
-    excerpt:
-      "Bình rèn học kỳ là bước tổng kết quan trọng, dựa trên kết quả bình rèn của các tháng để đánh giá và phân loại kết quả rèn luyện của học viên trong suốt một học kỳ.",
-    content: {
-      root: {
-        type: "root",
-        format: "",
-        indent: 0,
-        version: 1,
-        direction: "ltr",
-        children: [
-          // Mở đầu
-          {
-            type: "paragraph",
-            version: 1,
-            direction: "ltr",
-            format: "",
-            indent: 0,
-            children: [
-              {
-                type: "text",
-                text: "Bình rèn học kỳ là bước tổng kết quan trọng, dựa trên kết quả bình rèn của các tháng để đánh giá và phân loại kết quả rèn luyện của học viên trong suốt một học kỳ.",
-                version: 1,
-                detail: 0,
-                mode: "normal",
-                style: "",
-                format: 1, // bold
-              },
-            ],
-          },
-          {
-            type: "paragraph",
-            version: 1,
-            direction: "ltr",
-            format: "",
-            indent: 0,
-            children: [
-              {
-                type: "text",
-                text: "Hoạt động này giúp cấp ủy, chỉ huy các cấp có cái nhìn tổng thể về quá trình tu dưỡng, rèn luyện của học viên, từ đó đưa ra nhận xét, xếp loại và báo cáo lên nhà trường.",
-                version: 1,
-                detail: 0,
-                mode: "normal",
-                style: "",
-                format: 1, // bold
-              },
-            ],
-          },
-          {
-            type: "paragraph",
-            version: 1,
-            direction: "ltr",
-            format: "",
-            indent: 0,
-            children: [
-              {
-                type: "text",
-                text: "Quy trình bình rèn học kỳ được thực hiện như sau:",
-                version: 1,
-                detail: 0,
-                mode: "normal",
-                style: "",
-                format: 1, // bold
-              },
-            ],
-          },
-
-          // 1. Căn cứ và tài liệu sử dụng
-          {
-            type: "heading",
-            version: 1,
-            tag: "h3",
-            direction: "ltr",
-            format: "",
-            indent: 0,
-            children: [
-              {
-                type: "text",
-                text: "1. Căn cứ và tài liệu sử dụng",
-                version: 1,
-                detail: 0,
-                mode: "normal",
-                style: "",
-                format: 1, // bold
-              },
-            ],
-          },
-          
-          {
-            type: "list",
-            version: 1,
-            listType: "bullet",
-            start: 1,
-            tag: "ul",
-            direction: "ltr",
-            format: "",
-            indent: 0,
-            children: [
-              {
-                type: "listitem",
-                version: 1,
-                value: 1,
-                format: "",
-                indent: 0,
-                direction: "ltr",
-                children: [
-                  {
-                    type: "text",
-                    text: "Kết quả bình rèn của từng tháng trong học kỳ.",
-                    version: 1,
-                    detail: 0,
-                    mode: "normal",
-                    style: "",
-                    format: 1, // bold
-                  },
-                ],
-              },
-              {
-                type: "listitem",
-                version: 1,
-                value: 2,
-                format: "",
-                indent: 0,
-                direction: "ltr",
-                children: [
-                  {
-                    type: "text",
-                    text: "Biên bản sinh hoạt của các cấp (tiểu đội, lớp, đại đội, tiểu đoàn).",
-                    version: 1,
-                    detail: 0,
-                    mode: "normal",
-                    style: "",
-                    format: 1, // bold
-                  },
-                ],
-              },
-              {
-                type: "listitem",
-                version: 1,
-                value: 3,
-                format: "",
-                indent: 0,
-                direction: "ltr",
-                children: [
-                  {
-                    type: "text",
-                    text: "Điểm đánh giá cá nhân đã được tổng hợp theo từng tháng.",
-                    version: 1,
-                    detail: 0,
-                    mode: "normal",
-                    style: "",
-                    format: 1, // bold
-                  },
-                ],
-              },
-              {
-                type: "listitem",
-                version: 1,
-                value: 4,
-                format: "",
-                indent: 0,
-                direction: "ltr",
-                children: [
-                  {
-                    type: "text",
-                    text: "Tờ trình báo cáo kết quả bình rèn học kỳ.",
-                    version: 1,
-                    detail: 0,
-                    mode: "normal",
-                    style: "",
-                    format: 1, // bold
-                  },
-                ],
-              },
-            ],
-          },
-
-          // 2. Tổ chức bình rèn theo cấp
-          {
-            type: "heading",
-            version: 1,
-            tag: "h3",
-            direction: "ltr",
-            format: "",
-            indent: 0,
-            children: [
-              {
-                type: "text",
-                text: "2. Tổ chức bình rèn theo cấp",
-                version: 1,
-                detail: 0,
-                mode: "normal",
-                style: "",
-                format: 1, // bold
-              },
-            ],
-          },
-          {
-            type: "paragraph",
-            version: 1,
-            direction: "ltr",
-            format: "",
-            indent: 0,
-            children: [
-              {
-                type: "text",
-                text: "a) Lớp",
-                version: 1,
-                detail: 0,
-                mode: "normal",
-                style: "",
-                format: 1, // bold
-              },
-            ],
-          },
-          {
-            type: "list",
-            version: 1,
-            listType: "bullet",
-            start: 1,
-            tag: "ul",
-            direction: "ltr",
-            format: "",
-            indent: 0,
-            children: [
-              {
-                type: "listitem",
-                version: 1,
-                value: 1,
-                format: "",
-                indent: 0,
-                direction: "ltr",
-                children: [
-                  {
-                    type: "text",
-                    text: "Tổng hợp kết quả bình rèn từng tháng của từng học viên.",
-                    version: 1,
-                    detail: 0,
-                    mode: "normal",
-                    style: "",
-                    format: 1, // bold
-                  },
-                ],
-              },
-              {
-                type: "listitem",
-                version: 1,
-                value: 2,
-                format: "",
-                indent: 0,
-                direction: "ltr",
-                children: [
-                  {
-                    type: "text",
-                    text: "Tổ chức sinh hoạt lớp, thảo luận, nhận xét, đánh giá và phân loại học viên.",
-                    version: 1,
-                    detail: 0,
-                    mode: "normal",
-                    style: "",
-                    format: 1, // bold
-                  },
-                ],
-              },
-              {
-                type: "listitem",
-                version: 1,
-                value: 3,
-                format: "",
-                indent: 0,
-                direction: "ltr",
-                children: [
-                  {
-                    type: "text",
-                    text: "Lập biên bản sinh hoạt lớp và bảng điểm tổng hợp học kỳ.",
-                    version: 1,
-                    detail: 0,
-                    mode: "normal",
-                    style: "",
-                    format: 1, // bold
-                  },
-                ],
-              },
-              {
-                type: "listitem",
-                version: 1,
-                value: 4,
-                format: "",
-                indent: 0,
-                direction: "ltr",
-                children: [
-                  {
-                    type: "text",
-                    text: "Lớp trưởng ký xác nhận, nộp cho Đại đội.",
-                    version: 1,
-                    detail: 0,
-                    mode: "normal",
-                    style: "",
-                    format: 1, // bold
-                  },
-                ],
-              },
-            ],
-          },
-          {
-            type: "paragraph",
-            version: 1,
-            direction: "ltr",
-            format: "",
-            indent: 0,
-            children: [
-              {
-                type: "text",
-                text: "b) Đại đội",
-                version: 1,
-                detail: 0,
-                mode: "normal",
-                style: "",
-                format: 1, // bold
-              },
-            ],
-          },
-          {
-            type: "list",
-            version: 1,
-            listType: "bullet",
-            start: 1,
-            tag: "ul",
-            direction: "ltr",
-            format: "",
-            indent: 0,
-            children: [
-              {
-                type: "listitem",
-                version: 1,
-                value: 1,
-                format: "",
-                indent: 0,
-                direction: "ltr",
-                children: [
-                  {
-                    type: "text",
-                    text: "Thu nhận đầy đủ hồ sơ từ các lớp.",
-                    version: 1,
-                    detail: 0,
-                    mode: "normal",
-                    style: "",
-                    format: 1, // bold
-                  },
-                ],
-              },
-              {
-                type: "listitem",
-                version: 1,
-                value: 2,
-                format: "",
-                indent: 0,
-                direction: "ltr",
-                children: [
-                  {
-                    type: "text",
-                    text: "Tổ chức sinh hoạt toàn Đại đội, đánh giá, phân loại tập thể và cá nhân.",
-                    version: 1,
-                    detail: 0,
-                    mode: "normal",
-                    style: "",
-                    format: 1, // bold
-                  },
-                ],
-              },
-              {
-                type: "listitem",
-                version: 1,
-                value: 3,
-                format: "",
-                indent: 0,
-                direction: "ltr",
-                children: [
-                  {
-                    type: "text",
-                    text: "Lập biên bản sinh hoạt Đại đội và tờ trình báo cáo kết quả bình rèn học kỳ.",
-                    version: 1,
-                    detail: 0,
-                    mode: "normal",
-                    style: "",
-                    format: 1, // bold
-                  },
-                ],
-              },
-              {
-                type: "listitem",
-                version: 1,
-                value: 4,
-                format: "",
-                indent: 0,
-                direction: "ltr",
-                children: [
-                  {
-                    type: "text",
-                    text: "Đại đội trưởng/Chính trị viên xác nhận.",
-                    version: 1,
-                    detail: 0,
-                    mode: "normal",
-                    style: "",
-                    format: 1, // bold
-                  },
-                ],
-              },
-              {
-                type: "listitem",
-                version: 1,
-                value: 5,
-                format: "",
-                indent: 0,
-                direction: "ltr",
-                children: [
-                  {
-                    type: "text",
-                    text: "Nộp hồ sơ lên Tiểu đoàn.",
-                    version: 1,
-                    detail: 0,
-                    mode: "normal",
-                    style: "",
-                    format: 1, // bold
-                  },
-                ],
-              },
-            ],
-          },
-          {
-            type: "paragraph",
-            version: 1,
-            direction: "ltr",
-            format: "",
-            indent: 0,
-            children: [
-              {
-                type: "text",
-                text: "c) Tiểu đoàn",
-                version: 1,
-                detail: 0,
-                mode: "normal",
-                style: "",
-                format: 1, // bold
-              },
-            ],
-          },
-          {
-            type: "list",
-            version: 1,
-            listType: "bullet",
-            start: 1,
-            tag: "ul",
-            direction: "ltr",
-            format: "",
-            indent: 0,
-            children: [
-              {
-                type: "listitem",
-                version: 1,
-                value: 1,
-                format: "",
-                indent: 0,
-                direction: "ltr",
-                children: [
-                  {
-                    type: "text",
-                    text: "Tiếp nhận hồ sơ từ các Đại đội.",
-                    version: 1,
-                    detail: 0,
-                    mode: "normal",
-                    style: "",
-                    format: 1, // bold
-                  },
-                ],
-              },
-              {
-                type: "listitem",
-                version: 1,
-                value: 2,
-                format: "",
-                indent: 0,
-                direction: "ltr",
-                children: [
-                  {
-                    type: "text",
-                    text: "Tổ chức họp xét, đánh giá, phân loại kết quả rèn luyện học kỳ.",
-                    version: 1,
-                    detail: 0,
-                    mode: "normal",
-                    style: "",
-                    format: 1, // bold
-                  },
-                ],
-              },
-              {
-                type: "listitem",
-                version: 1,
-                value: 3,
-                format: "",
-                indent: 0,
-                direction: "ltr",
-                children: [
-                  {
-                    type: "text",
-                    text: "Lập biên bản sinh hoạt Tiểu đoàn, xác nhận kết quả.",
-                    version: 1,
-                    detail: 0,
-                    mode: "normal",
-                    style: "",
-                    format: 1, // bold
-                  },
-                ],
-              },
-              {
-                type: "listitem",
-                version: 1,
-                value: 4,
-                format: "",
-                indent: 0,
-                direction: "ltr",
-                children: [
-                  {
-                    type: "text",
-                    text: "Lập tờ trình gửi Nhà trường.",
-                    version: 1,
-                    detail: 0,
-                    mode: "normal",
-                    style: "",
-                    format: 1, // bold
-                  },
-                ],
-              },
-            ],
-          },
-          {
-            type: "paragraph",
-            version: 1,
-            direction: "ltr",
-            format: "",
-            indent: 0,
-            children: [
-              {
-                type: "text",
-                text: "d) Nhà trường",
-                version: 1,
-                detail: 0,
-                mode: "normal",
-                style: "",
-                format: 1, // bold
-              },
-            ],
-          },
-          {
-            type: "list",
-            version: 1,
-            listType: "bullet",
-            start: 1,
-            tag: "ul",
-            direction: "ltr",
-            format: "",
-            indent: 0,
-            children: [
-              {
-                type: "listitem",
-                version: 1,
-                value: 1,
-                format: "",
-                indent: 0,
-                direction: "ltr",
-                children: [
-                  {
-                    type: "text",
-                    text: "Nhận hồ sơ bình rèn học kỳ từ các Tiểu đoàn.",
-                    version: 1,
-                    detail: 0,
-                    mode: "normal",
-                    style: "",
-                    format: 1, // bold
-                  },
-                ],
-              },
-              {
-                type: "listitem",
-                version: 1,
-                value: 2,
-                format: "",
-                indent: 0,
-                direction: "ltr",
-                children: [
-                  {
-                    type: "text",
-                    text: "Tổ chức xét duyệt, phê duyệt và ban hành kết quả rèn luyện học kỳ chính thức.",
-                    version: 1,
-                    detail: 0,
-                    mode: "normal",
-                    style: "",
-                    format: 1, // bold
-                  },
-                ],
-              },
-              {
-                type: "listitem",
-                version: 1,
-                value: 3,
-                format: "",
-                indent: 0,
-                direction: "ltr",
-                children: [
-                  {
-                    type: "text",
-                    text: "Lưu hồ sơ theo quy định.",
-                    version: 1,
-                    detail: 0,
-                    mode: "normal",
-                    style: "",
-                    format: 1, // bold
-                  },
-                ],
-              },
-            ],
-          },
-
-          // 3. Hồ sơ
-          {
-            type: "heading",
-            version: 1,
-            tag: "h3",
-            direction: "ltr",
-            format: "",
-            indent: 0,
-            children: [
-              {
-                type: "text",
-                text: "3. Hồ sơ bình rèn học kỳ gồm có",
-                version: 1,
-                detail: 0,
-                mode: "normal",
-                style: "",
-                format: 1, // bold
-              },
-            ],
-          },
-          {
-            type: "list",
-            version: 1,
-            listType: "number",
-            start: 1,
-            tag: "ol",
-            direction: "ltr",
-            format: "",
-            indent: 0,
-            children: [
-              {
-                type: "listitem",
-                version: 1,
-                value: 1,
-                format: "",
-                indent: 0,
-                direction: "ltr",
-                children: [
-                  {
-                    type: "text",
-                    text: "Phiếu đánh giá cá nhân (theo kết quả từng tháng).",
-                    version: 1,
-                    detail: 0,
-                    mode: "normal",
-                    style: "",
-                    format: 1, // bold
-                  },
-                ],
-              },
-              {
-                type: "listitem",
-                version: 1,
-                value: 2,
-                format: "",
-                indent: 0,
-                direction: "ltr",
-                children: [
-                  {
-                    type: "text",
-                    text: "Biên bản sinh hoạt lớp, Đại đội, Tiểu đoàn.",
-                    version: 1,
-                    detail: 0,
-                    mode: "normal",
-                    style: "",
-                    format: 1, // bold
-                  },
-                ],
-              },
-              {
-                type: "listitem",
-                version: 1,
-                value: 3,
-                format: "",
-                indent: 0,
-                direction: "ltr",
-                children: [
-                  {
-                    type: "text",
-                    text: "Bảng điểm tổng hợp học kỳ của cá nhân.",
-                    version: 1,
-                    detail: 0,
-                    mode: "normal",
-                    style: "",
-                    format: 1, // bold
-                  },
-                ],
-              },
-              {
-                type: "listitem",
-                version: 1,
-                value: 4,
-                format: "",
-                indent: 0,
-                direction: "ltr",
-                children: [
-                  {
-                    type: "text",
-                    text: "Tờ trình báo cáo kết quả bình rèn học kỳ.",
-                    version: 1,
-                    detail: 0,
-                    mode: "normal",
-                    style: "",
-                    format: 1, // bold
-                  },
-                ],
-              },
-            ],
-          },
-
-          // 4. Lưu ý
-          {
-            type: "heading",
-            version: 1,
-            tag: "h3",
-            direction: "ltr",
-            format: "",
-            indent: 0,
-            children: [
-              {
-                type: "text",
-                text: "4. Một số lưu ý",
-                version: 1,
-                detail: 0,
-                mode: "normal",
-                style: "",
-                format: 1, // bold
-              },
-            ],
-          },
-          {
-            type: "list",
-            version: 1,
-            listType: "bullet",
-            start: 1,
-            tag: "ul",
-            direction: "ltr",
-            format: "",
-            indent: 0,
-            children: [
-              {
-                type: "listitem",
-                version: 1,
-                value: 1,
-                format: "",
-                indent: 0,
-                direction: "ltr",
-                children: [
-                  {
-                    type: "text",
-                    text: "Cần bám sát kết quả bình rèn tháng để bảo đảm tính khách quan.",
-                    version: 1,
-                    detail: 0,
-                    mode: "normal",
-                    style: "",
-                    format: 1, // bold
-                  },
-                ],
-              },
-              {
-                type: "listitem",
-                version: 1,
-                value: 2,
-                format: "",
-                indent: 0,
-                direction: "ltr",
-                children: [
-                  {
-                    type: "text",
-                    text: "Đánh giá phải toàn diện, công khai, dân chủ, phản ánh đúng quá trình rèn luyện.",
-                    version: 1,
-                    detail: 0,
-                    mode: "normal",
-                    style: "",
-                    format: 1, // bold
-                  },
-                ],
-              },
-              {
-                type: "listitem",
-                version: 1,
-                value: 3,
-                format: "",
-                indent: 0,
-                direction: "ltr",
-                children: [
-                  {
-                    type: "text",
-                    text: "Hồ sơ nộp theo đúng trình tự cấp bậc: Lớp → Đại đội → Tiểu đoàn → Nhà trường.",
-                    version: 1,
-                    detail: 0,
-                    mode: "normal",
-                    style: "",
-                    format: 1, // bold
-                  },
-                ],
-              },
-              {
-                type: "listitem",
-                version: 1,
-                value: 4,
-                format: "",
-                indent: 0,
-                direction: "ltr",
-                children: [
-                  {
-                    type: "text",
-                    text: "Lưu giữ hồ sơ cẩn thận để phục vụ công tác quản lý lâu dài.",
-                    version: 1,
-                    detail: 0,
-                    mode: "normal",
-                    style: "",
-                    format: 1, // bold
-                  },
-                ],
-              },
-            ],
-          },
-
-          // Tải file
-          {
-            type: "paragraph",
-            version: 1,
-            direction: "ltr",
-            format: "",
-            indent: 0,
-            children: [
-              {
-                type: "text",
-                text: "Để thuận tiện cho quá trình triển khai, đơn vị có thể tải bộ mẫu hồ sơ bình rèn học kỳ theo đường dẫn dưới đây:",
-                version: 1,
-                detail: 0,
-                mode: "normal",
-                style: "",
-                format: 1, // bold
-              },
-            ],
-          },
-          {
-            type: "paragraph",
-            version: 1,
-            direction: "ltr",
-            format: "",
-            indent: 0,
-            children: [
-              {
-                type: "text",
-                text: "📎 Tải bộ mẫu hồ sơ bình rèn học kỳ (.docx)",
-                version: 1,
-                detail: 0,
-                mode: "normal",
-                style: "",
-                format: 1, // bold
-              },
-            ],
-          },
-        ],
-      },
-    },
-    categories: [category4], // thay categoryId phù hợp
-    publishedAt: new Date().toISOString(),
-  },
-});
-
-
-
-
-
-
-//   // create media 
-//   const path = require('path');
-
-// // Tạo media record cho file mẫu phiếu bình rèn tuần
-// const mediaFile = await payload.create({
-//   collection: "media",
-//   data: {
-//     alt:  "Mẫu phiếu bình rèn tuần cho đơn vị quân đội",
-//     caption: {
-    
-//         root: {
-//           type: "root",
-//           format: "",
-//           indent: 0,
-//           version: 1,
-//           direction: "ltr",
-//           children: [
-//             {
-//               type: "paragraph",
-//               version: 1,
-//               direction: "ltr",
-//               format: "",
-//               indent: 0,
-//               children: [
-//                 {
-//                   type: "text",
-//                   text: "Tài liệu hướng dẫn chi tiết về cách thực hiện bình rèn tuần trong các đơn vị quân đội. File bao gồm biểu mẫu chuẩn và hướng dẫn sử dụng.",
-//                   version: 1,
-//                   detail: 0,
-//                   mode: "normal",
-//                   style: "",
-//                   format: 0,
-//                 },
-//               ],
-//             },
-//           ],
-//         },
-//       },
-      
-    
-//   },
-//   filePath: path.join(__dirname, 'public', 'media', 'Noi-dung-mau-binh-ren-tuan.docx'), // Đường dẫn tới file .docx
-// });
-
-  
 };
+export default seed;
