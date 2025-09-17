@@ -16,6 +16,7 @@ import { getUserTenantIDs } from "./utilities/getUserTenantIDs";
 import { seed } from "./seed";
 import { type Payload } from "payload";
 import type { PayloadHandler } from "payload";
+import MyCustomStyles from './components/Mystyle/MyCustomStyles';
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -24,13 +25,17 @@ const dirname = path.dirname(filename);
 export default buildConfig({
   admin: {
     user: "users",
+    dateFormat: 'dd/MM/yyyy',              // Format ngày tháng
+   
     components: {
       logout: { Button: "@/components/logout-button" },
+      // beforeLogin: [MyCustomStyles], // inject CSS/JS trước login
+      // afterDashboard: [MyCustomStyles], // hoặc inject sau dashboard
     },
     importMap: {
       baseDir: path.resolve(dirname),
     },
-    
+   
   },
   collections: [Pages, Users, Tenants, Categories, Posts, Media],
 

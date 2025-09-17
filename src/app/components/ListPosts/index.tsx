@@ -84,9 +84,21 @@ export const ListPosts = () => {
 							(category) => category.slug === slug
 						)
 				)
+				// Sắp xếp từ cũ nhất đến mới nhất theo publishedAt
+				const sortedPosts = filteredPosts.sort(
+					(
+						a: { publishedAt: string | number | Date },
+						b: { publishedAt: string | number | Date }
+					) => {
+						return (
+							new Date(a.publishedAt).getTime() -
+							new Date(b.publishedAt).getTime()
+						)
+					}
+				)
 				// const dataPostReverse = filteredPosts.reverse()
-				if (filteredPosts) {
-					setPosts(filteredPosts)
+				if (sortedPosts) {
+					setPosts(sortedPosts)
 				} else {
 					console.log('error get posts')
 				}
@@ -154,7 +166,11 @@ export const ListPosts = () => {
 												<span>
 													{new Date(
 														post.createdAt
-													).toLocaleDateString()}
+													).toLocaleDateString('vi', {
+														year: 'numeric',
+														month: 'long',
+														day: 'numeric'
+													})}
 												</span>
 											</div>
 										</div>

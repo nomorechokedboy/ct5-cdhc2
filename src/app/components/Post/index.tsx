@@ -834,7 +834,7 @@ export default function PostDetailPage() {
 								<span>
 									{new Date(
 										post.publishedAt
-									).toLocaleDateString('en-vi', {
+									).toLocaleDateString('vi', {
 										year: 'numeric',
 										month: 'long',
 										day: 'numeric'
