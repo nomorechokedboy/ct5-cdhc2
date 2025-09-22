@@ -11,10 +11,11 @@
 		"generate:importmap": "cross-env NODE_OPTIONS=--no-deprecation payload generate:importmap",
 		"generate:schema": "payload-graphql generate:schema",
 		"generate:types": "payload generate:types",
-		"lint:es": "eslint . --ext ts,tsx,js",
+		"migrate:create": "payload migrate:create",
 		"payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
 		"seed": "npm run payload migrate:fresh",
-		"start": "cross-env NODE_OPTIONS=--no-deprecation next start"
+		"start": "cross-env NODE_OPTIONS=--no-deprecation next start",
+		"prepare": "husky"
 	},
 	"dependencies": {
 		"@libsql/client": "^0.15.15",
