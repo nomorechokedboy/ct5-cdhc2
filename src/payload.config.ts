@@ -17,6 +17,7 @@ import { seed } from './seed'
 import { type Payload } from 'payload'
 import type { PayloadHandler } from 'payload'
 import MyCustomStyles from './components/Mystyle/MyCustomStyles'
+import { migrations } from './migrations'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
