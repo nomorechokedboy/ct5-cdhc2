@@ -5,7 +5,7 @@ const nextConfig = {
     // Your Next.js config here
     eslint: { ignoreDuringBuilds: true },
     typescript: { ignoreBuildErrors: true },
-    // output: 'standalone',
+    output: 'standalone',
     async rewrites() {
         return [
             {
