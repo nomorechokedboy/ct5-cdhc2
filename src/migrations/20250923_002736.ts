@@ -178,6 +178,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
 	await db.run(sql`CREATE TABLE \`posts\` (
   	\`id\` integer PRIMARY KEY NOT NULL,
   	\`title\` text,
+  	\`excerpt\` text,
   	\`content\` text,
   	\`published_at\` text,
   	\`updated_at\` text DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now')) NOT NULL,

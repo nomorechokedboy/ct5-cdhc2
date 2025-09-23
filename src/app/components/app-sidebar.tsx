@@ -209,7 +209,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 		<Sidebar {...props}>
 			<SidebarHeader>
 				<div className='flex items-center gap-2 px-4 py-2'>
-					<div className='flex h-8 w-8 items-center justify-center rounded-lg bg-secondary text-primary-foreground'>
+					<div className='flex flex-shrink-0 h-8 w-8 items-center justify-center rounded-lg bg-white text-primary-foreground'>
 						<Image
 							src='/cdhc2.png'
 							alt='Logo Trường Cao đẳng hậu cần 2'
@@ -218,7 +218,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 						/>
 					</div>
 					{!isCollapsed && (
-						<div className='flex flex-col'>
+						<div className='flex flex-col flex-1'>
 							<span className='text-sm font-semibold'>
 								Hướng dẫn xử lí thủ tục hành chính
 							</span>

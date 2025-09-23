@@ -732,6 +732,13 @@
 					"notNull": false,
 					"autoincrement": false
 				},
+				"excerpt": {
+					"name": "excerpt",
+					"type": "text",
+					"primaryKey": false,
+					"notNull": false,
+					"autoincrement": false
+				},
 				"content": {
 					"name": "content",
 					"type": "text",
@@ -1782,6 +1789,6 @@
 	"internal": {
 		"indexes": {}
 	},
-	"id": "0308b86c-942b-4ab7-9c3d-0b21579a23cb",
+	"id": "ffb1ca23-457f-4733-9380-8c867c0d6647",
 	"prevId": "00000000-0000-0000-0000-000000000000"
 }
