@@ -8,6 +8,7 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import { ScrollToTop } from '../scroll-to-top'
+import payload from 'payload'
 
 interface Post {
 	id: string
@@ -705,7 +706,7 @@ export default function PostDetailPage() {
 			setLoading(true)
 			setError(null)
 
-			const res = await fetch('http://localhost:3000/api/posts')
+			const res = await fetch('/api/posts')
 
 			if (!res.ok) {
 				throw new Error(`HTTP error! status: ${res.status}`)
